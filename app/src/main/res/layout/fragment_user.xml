@@ -27,6 +27,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rl_user_set"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_head"
             android:layout_marginLeft="@dimen/margin_small"
@@ -60,6 +61,7 @@
                 android:textSize="@dimen/text_size_small" />
 
             <ImageView
+                android:id="@+id/tv_set"
                 android:layout_width="@dimen/size_set"
                 android:layout_height="@dimen/size_set"
                 android:layout_alignParentRight="true"

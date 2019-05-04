@@ -14,6 +14,8 @@
     <dimen name="text_size_big">20sp</dimen>
     <dimen name="text_size_huge">40sp</dimen>
 
+    <dimen name="picker_view_height">160dp</dimen>
+    <dimen name="date_unit_text_size">18sp</dimen>
     <!--头像大小-->
     <dimen name="size_head">50dp</dimen>
     <dimen name="size_set">20dp</dimen>

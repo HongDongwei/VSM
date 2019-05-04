@@ -17,12 +17,13 @@ import android.widget.TimePicker;
 
 import com.codvision.vsm.R;
 import com.codvision.vsm.utils.FindCommand;
+import com.codvision.vsm.utils.datepicker.CustomDatePicker;
+import com.codvision.vsm.utils.datepicker.DateFormatUtils;
 
 import java.util.Calendar;
 
 public class AddScheduleActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
 
-    private TextView tvDay;
     private TextView tvTime;
     private int year = 0;
     private int month = 0;
@@ -41,18 +42,19 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
     private EditText etContent;
     private FindCommand findCommand;
     private Boolean setFindCommand;
+    private CustomDatePicker mTimerPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
         initView();
+        initTimerPicker();
         initDateTime();
         initEvent();
     }
 
     private void initView() {
-        tvDay = findViewById(R.id.tv_add_day);
         tvTime = findViewById(R.id.tv_add_time);
         tvAlert1 = findViewById(R.id.tv_alert1);
         tvAlert2 = findViewById(R.id.tv_alert2);
@@ -82,21 +84,24 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         tvAlert4.setSelected(false);
         textView.setSelected(true);
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTimerPicker.onDestroy();
+    }
 
     private void startCommand(String s) {
         findCommand.setContent(s);
         if (date.length() > 0) { //清除上次记录的日期
             date.delete(0, date.length());
         }
-        tvDay.setText(date.append(String.valueOf(findCommand.getYear())).append("年").append(String.valueOf(findCommand.getMonth())).append("月").append(findCommand.getDay()).append("日"));
         if (time.length() > 0) { //清除上次记录的日期
             time.delete(0, time.length());
         }
-        tvTime.setText(time.append(String.valueOf(findCommand.getHour())).append("时").append(String.valueOf(findCommand.getMinute())).append("分"));
+        tvTime.setText(date.append(String.valueOf(findCommand.getYear())).append("-").append(String.valueOf(findCommand.getMonth())).append("-").append(findCommand.getDay()) + " " + time.append(String.valueOf(findCommand.getHour())).append(":").append(String.valueOf(findCommand.getMinute())));
     }
 
     private void initEvent() {
-        tvDay.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         tvAlert1.setOnClickListener(this);
         tvAlert2.setOnClickListener(this);
@@ -134,6 +139,29 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
+    private void initTimerPicker() {
+        String beginTime = "2018-10-17 18:00";
+        String endTime = DateFormatUtils.long2Str(System.currentTimeMillis(), true);
+
+        tvTime.setText(endTime);
+
+        // 通过日期字符串初始化日期，格式请用：yyyy-MM-dd HH:mm
+        mTimerPicker = new CustomDatePicker(this, new CustomDatePicker.Callback() {
+            @Override
+            public void onTimeSelected(long timestamp) {
+                tvTime.setText(DateFormatUtils.long2Str(timestamp, true));
+            }
+        }, beginTime, endTime);
+        // 允许点击屏幕或物理返回键关闭
+        mTimerPicker.setCancelable(true);
+        // 显示时和分
+        mTimerPicker.setCanShowPreciseTime(true);
+        // 允许循环滚动
+        mTimerPicker.setScrollLoop(true);
+        // 允许滚动动画
+        mTimerPicker.setCanShowAnim(true);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -149,64 +177,9 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
             case R.id.tv_alert4:
                 setClick(tvAlert4);
                 break;
-            case R.id.tv_add_day:
-                setFindCommand = false;
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setPositiveButton("设置", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (date.length() > 0) { //清除上次记录的日期
-                            date.delete(0, date.length());
-                        }
-                        tvDay.setText(date.append(String.valueOf(year)).append("年").append(String.valueOf(month)).append("月").append(day).append("日"));
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                final AlertDialog dialog = builder.create();
-                View dialogView = View.inflate(this, R.layout.dialog_date, null);
-                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker);
-
-                dialog.setTitle("设置日期");
-                dialog.setView(dialogView);
-                dialog.show();
-                //初始化日期监听事件
-                datePicker.init(year, month - 1, day, this);
-                break;
             case R.id.tv_add_time:
-                setFindCommand = false;
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-                builder2.setPositiveButton("设置", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (time.length() > 0) { //清除上次记录的日期
-                            time.delete(0, time.length());
-                        }
-                        tvTime.setText(time.append(String.valueOf(hour)).append("时").append(String.valueOf(minute)).append("分"));
-                        dialog.dismiss();
-                    }
-                });
-                builder2.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog dialog2 = builder2.create();
-                View dialogView2 = View.inflate(this, R.layout.dialog_time, null);
-                TimePicker timePicker = (TimePicker) dialogView2.findViewById(R.id.timePicker);
-                timePicker.setCurrentHour(hour);
-                timePicker.setCurrentMinute(minute);
-                timePicker.setIs24HourView(true); //设置24小时制
-                timePicker.setOnTimeChangedListener(this);
-                dialog2.setTitle("设置时间");
-                dialog2.setView(dialogView2);
-                dialog2.show();
+                // 日期格式为yyyy-MM-dd HH:mm
+                mTimerPicker.show(tvTime.getText().toString());
                 break;
             default:
                 break;
@@ -218,7 +191,7 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH) + 1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        hour = calendar.get(Calendar.HOUR);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
     }
 

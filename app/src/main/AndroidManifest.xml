@@ -17,9 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.SettingActivity"></activity>
+        <activity android:name=".ui.activity.UserActivity" />
         <activity
             android:name=".ui.activity.AddScheduleActivity"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activity.CalendarActivity" />
         <activity android:name=".ui.MainActivity">
             <intent-filter>
@@ -28,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".serice.ScheduleConfirmService"
             android:label="ScheduleConfirmService" />

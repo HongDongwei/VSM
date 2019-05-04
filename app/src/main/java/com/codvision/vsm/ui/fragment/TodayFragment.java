@@ -2,8 +2,11 @@ package com.codvision.vsm.ui.fragment;
 
 import android.Manifest;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -11,11 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codvision.vsm.R;
+import com.codvision.vsm.ui.activity.AddScheduleActivity;
+import com.codvision.vsm.ui.activity.CalendarActivity;
+import com.codvision.vsm.utils.DayUtils;
 import com.codvision.vsm.utils.FindCommand;
 import com.codvision.vsm.utils.JsonParser;
 import com.iflytek.cloud.ErrorCode;
@@ -30,10 +37,16 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -44,11 +57,21 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = "TodayFragment";
 
     private View view;
-    private EditText et_input;
+    private TextView tvTextLink;
     private ImageButton ibAdd;
     private FindCommand findCommand;
+    private ImageView ivCalendar;
+
+    private TextView tvDay;
+    private TextView tvWeek;
+    private TextView tvBack;
+
     // 用HashMap存储听写结果
     private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
+    private boolean speaker;
+
+    private MaterialCalendarView materialCalendarView;//布局内的控件
+    private CalendarDay currentDate;//自定义的日期对象
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_today, container, false);
@@ -56,32 +79,114 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         initView();
         initEvent();
         initSpeech();
+        initData();
         return view;
     }
 
     private void initView() {
-        et_input = (EditText) view.findViewById(R.id.et_input);
         ibAdd = (ImageButton) view.findViewById(R.id.ib_add);
-        et_input.setOnClickListener(this);
-        ibAdd.setOnClickListener(this);
+        ivCalendar = (ImageView) view.findViewById(R.id.iv_calendar);
+        tvDay = (TextView) view.findViewById(R.id.tv_today_day);
+        tvWeek = (TextView) view.findViewById(R.id.tv_today_week);
+        tvBack = (TextView) view.findViewById(R.id.tv_back);
+        // 实例化
+        materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         findCommand = new FindCommand(getActivity());
     }
 
     private void initEvent() {
-
+        ibAdd.setOnClickListener(this);
+        ivCalendar.setOnClickListener(this);
+        tvBack.setOnClickListener(this);
+        ibAdd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startSpeechDialog();
+                return true;
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ib_add: //语音识别（把声音转文字）
-                startSpeechDialog();
+            case R.id.iv_calendar: //语音识别（把声音转文字）
+                Intent intent = new Intent(getActivity(), CalendarActivity.class);
+                startActivity(intent);
                 break;
-            case R.id.et_input:// 语音合成（把文字转声音）
+            case R.id.ib_add: //语音识别（把声音转文字）
+                intent = new Intent(getActivity(), AddScheduleActivity.class);
+                startActivity(intent);
+                break;
+//            case R.id.bt_get_time:
+//                if (currentDate != null) {
+//                    int year = currentDate.getYear();
+//                    int month = currentDate.getMonth() + 1; //月份跟系统一样是从0开始的，实际获取时要加1
+//                    int day = currentDate.getDay();
+//                    Toast.makeText(getActivity(), currentDate.toString() + "你选中的是：" + year + "-" + month + "-" + day, Toast.LENGTH_LONG).show();
+//                } else {
+//                    Toast.makeText(getActivity(), "请选择时间", Toast.LENGTH_LONG).show();
+//                }
+//                break;
+//            case R.id.bt_turn_time: //语音识别（把声音转文字）
+//                // 设置日历默认的时间为当前的时间
+//                materialCalendarView.setSelectedDate(new Date());
+//                break;
+            case R.id.tv_back: //语音识别（把声音转文字）
+                materialCalendarView.setSelectedDate(new Date());
+                initToady(true, currentDate);
                 break;
             default:
                 break;
         }
+    }
+
+    private void initToady(Boolean today, CalendarDay currentDate) {
+        if (today) {
+            tvWeek.setVisibility(View.GONE);
+            tvBack.setVisibility(View.GONE);
+            tvDay.setText("今日日程");
+        } else {
+            int year = currentDate.getYear();
+            int month = currentDate.getMonth() + 1; //月份跟系统一样是从0开始的，实际获取时要加1
+            int day = currentDate.getDay();
+            tvWeek.setVisibility(View.VISIBLE);
+            tvBack.setVisibility(View.VISIBLE);
+            tvDay.setText(month + "月" + day + "日");
+            tvWeek.setText("周" + DayUtils.getWeek(year, month, day));
+        }
+        materialCalendarView.state().edit().commit();
+    }
+
+    private void initData() {
+        // 显示兴起补全的整个礼拜的上个月或者下个月的日期 一般会多出一行整个礼拜
+        // 点击补全出来的另外一个月的信息 可以直接跳到那个月
+        materialCalendarView.setShowOtherDates(MaterialCalendarView.SHOW_ALL);
+        // 设置日历默认的时间为当前的时间
+        materialCalendarView.setSelectedDate(new Date());
+        currentDate = CalendarDay.from(new Date());
+        initToady(true, currentDate);
+        //编辑日历属性
+        materialCalendarView.state().edit()
+                .setFirstDayOfWeek(Calendar.MONDAY)   //设置每周开始的第一天
+                .setMinimumDate(CalendarDay.from(2010, 4, 3))  //设置可以显示的最早时间
+                .setMaximumDate(CalendarDay.from(2020, 5, 12))//设置可以显示的最晚时间
+                .setCalendarDisplayMode(CalendarMode.WEEKS)//设置显示模式，可以显示月的模式，也可以显示周的模式
+                .commit();// 返回对象并保存
+        //      设置点击日期的监听
+        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                currentDate = date;
+                if (CalendarDay.from(new Date()).equals(currentDate)) {
+                    initToady(true, date);
+                } else {
+                    initToady(false, date);
+                }
+
+            }
+        });
+
     }
 
     private void initSpeech() {
@@ -113,37 +218,27 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onSpeakBegin() {
-            showTip(" 开始播放 ");
         }
 
         @Override
         public void onSpeakPaused() {
-            showTip(" 暂停播放 ");
         }
 
         @Override
         public void onSpeakResumed() {
-            showTip(" 继续播放 ");
         }
 
         @Override
-        public void onBufferProgress(int percent, int beginPos, int endPos,
-                                     String info) {
-            // 合成进度
+        public void onBufferProgress(int percent, int beginPos, int endPos, String info) {
         }
 
         @Override
         public void onSpeakProgress(int percent, int beginPos, int endPos) {
-            // 播放进度
         }
 
         @Override
         public void onCompleted(SpeechError error) {
-            if (error == null) {
-                showTip("播放完成 ");
-            } else if (error != null) {
-                showTip(error.getPlainDescription(true));
-            }
+
         }
 
         @Override
@@ -224,6 +319,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         mDialog.setListener(new MyRecognizerDialogListener());
         //4. 显示dialog，接收语音输入
         mDialog.show();
+        tvTextLink = (TextView) mDialog.getWindow().getDecorView().findViewWithTag("textlink");
+        tvTextLink.setText("小莫正在为您服务^_^！！！");
+        tvTextLink.getPaint().setFlags(Paint.SUBPIXEL_TEXT_FLAG);//取消下划线
     }
 
     class MyRecognizerDialogListener implements RecognizerDialogListener {
@@ -256,9 +354,13 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
                 resultBuffer.append(mIatResults.get(key));
             }
             if (isLast) {
-                speekText(findCommand.findCommand(resultBuffer.toString()));
+                // speekText(findCommand.findCommand(resultBuffer.toString()));
+                Intent intent = new Intent();
+                intent.putExtra("goodId", resultBuffer.toString());//设置参数,""
+                intent.setClass(getActivity(), AddScheduleActivity.class);//从哪里跳到哪里
+                getActivity().startActivity(intent);
             }
-
+            speaker = false;
         }
 
         @Override

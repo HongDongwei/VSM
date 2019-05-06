@@ -29,5 +29,7 @@
 
     <color name="plan_incomplete">#FF9800</color>
     <color name="plan_complete">#98F331</color>
+
+    <color name="light_blue">#D7E6FC</color>
 </resources>
 

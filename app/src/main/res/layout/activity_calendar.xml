@@ -1,22 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:background="#fff"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="fill_parent"
+    android:background="@color/themeBgColor"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ll_toobar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themeColor"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_calendar_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/calendar" />
+
+        <TextView
+            android:id="@+id/tv_selected_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="15dp"
+            android:text="2019年5月"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/iv_plan_add"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/plan_add" />
+    </RelativeLayout>
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:mcv_showOtherDates="all"
+        android:background="#fff"
         app:mcv_selectionColor="#F00"
+        app:mcv_showOtherDates="all"
 
         />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:onClick="getTime"
-        android:text="获取时间"
-        />
+        android:text="获取时间" />
 </LinearLayout>

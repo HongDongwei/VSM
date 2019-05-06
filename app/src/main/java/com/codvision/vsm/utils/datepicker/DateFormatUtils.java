@@ -3,10 +3,13 @@ package com.codvision.vsm.utils.datepicker;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 public class DateFormatUtils {
 
     private static final String DATE_FORMAT_PATTERN_YMD = "yyyy-MM";
     private static final String DATE_FORMAT_PATTERN_YMD_HM = "yyyy-M-d H:m";
+    private static final String DATE_FORMAT_YMD = "yyyy年MM月";
+    private static final String DATE_FORMAT_YMD_HM = "yyyy年M月d日 H点m分";
 
     /**
      * 时间戳转字符串
@@ -17,6 +20,10 @@ public class DateFormatUtils {
      */
     public static String long2Str(long timestamp, boolean isPreciseTime) {
         return long2Str(timestamp, getFormatPattern(isPreciseTime));
+    }
+
+    public static String longStr(long timestamp, boolean isPreciseTime) {
+        return long2Str(timestamp, getFormat (isPreciseTime));
     }
 
     private static String long2Str(long timestamp, String pattern) {
@@ -50,4 +57,11 @@ public class DateFormatUtils {
         }
     }
 
+    private static String getFormat(boolean showSpecificTime) {
+        if (showSpecificTime) {
+            return DATE_FORMAT_YMD_HM;
+        } else {
+            return DATE_FORMAT_YMD;
+        }
+    }
 }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -23,7 +24,10 @@ import com.codvision.vsm.utils.datepicker.DateFormatUtils;
 import java.util.Calendar;
 
 public class AddScheduleActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
-
+    /**
+     * TAG
+     */
+    public static final String TAG = "AddScheduleActivity";
     private TextView tvTime;
     private int year = 0;
     private int month = 0;
@@ -39,6 +43,7 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
     private TextView tvAlert4;
     private TextView tvContent;
 
+    private ImageView ivAddBack;
     private EditText etContent;
     private FindCommand findCommand;
     private Boolean setFindCommand;
@@ -49,7 +54,7 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
         initView();
-        initTimerPicker();
+
         initDateTime();
         initEvent();
     }
@@ -62,10 +67,11 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         tvAlert4 = findViewById(R.id.tv_alert4);
         tvContent = findViewById(R.id.tv_content);
         etContent = findViewById(R.id.et_content);
+        ivAddBack = findViewById(R.id.iv_add_back);
         findCommand = new FindCommand(this);
         date = new StringBuffer();
         time = new StringBuffer();
-
+        initTimerPicker();
         setFindCommand = true;
         setClick(tvAlert2);
         Intent intent = getIntent();
@@ -77,29 +83,6 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void setClick(TextView textView) {
-        tvAlert1.setSelected(false);
-        tvAlert2.setSelected(false);
-        tvAlert3.setSelected(false);
-        tvAlert4.setSelected(false);
-        textView.setSelected(true);
-    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mTimerPicker.onDestroy();
-    }
-
-    private void startCommand(String s) {
-        findCommand.setContent(s);
-        if (date.length() > 0) { //清除上次记录的日期
-            date.delete(0, date.length());
-        }
-        if (time.length() > 0) { //清除上次记录的日期
-            time.delete(0, time.length());
-        }
-        tvTime.setText(date.append(String.valueOf(findCommand.getYear())).append("-").append(String.valueOf(findCommand.getMonth())).append("-").append(findCommand.getDay()) + " " + time.append(String.valueOf(findCommand.getHour())).append(":").append(String.valueOf(findCommand.getMinute())));
-    }
 
     private void initEvent() {
         tvTime.setOnClickListener(this);
@@ -107,7 +90,7 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         tvAlert2.setOnClickListener(this);
         tvAlert3.setOnClickListener(this);
         tvAlert4.setOnClickListener(this);
-
+        ivAddBack.setOnClickListener(this);
         etContent.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -139,7 +122,36 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
+    private void setClick(TextView textView) {
+        tvAlert1.setSelected(false);
+        tvAlert2.setSelected(false);
+        tvAlert3.setSelected(false);
+        tvAlert4.setSelected(false);
+        textView.setSelected(true);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTimerPicker.onDestroy();
+    }
+
+    private void startCommand(String s) {
+        findCommand.setContent(s);
+        if (date.length() > 0) { //清除上次记录的日期
+            date.delete(0, date.length());
+        }
+        if (time.length() > 0) { //清除上次记录的日期
+            time.delete(0, time.length());
+        }
+        tvTime.setText(date.append(String.valueOf(findCommand.getYear())).append("-").append(String.valueOf(findCommand.getMonth())).append("-").append(findCommand.getDay()) + " " + time.append(String.valueOf(findCommand.getHour())).append(":").append(String.valueOf(findCommand.getMinute())));
+        Log.i(TAG, "startCommand: " + date.append(String.valueOf(findCommand.getYear())).append("-").append(String.valueOf(findCommand.getMonth())).append("-").append(findCommand.getDay()) + " " + time.append(String.valueOf(findCommand.getHour())).append(":").append(String.valueOf(findCommand.getMinute())));
+        ;
+    }
+
     private void initTimerPicker() {
+        //        Calendar calendar = Calendar.getInstance();
+        //        String beginTime = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
         String beginTime = "2018-10-17 18:00";
         String endTime = DateFormatUtils.long2Str(System.currentTimeMillis(), true);
 
@@ -150,6 +162,11 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onTimeSelected(long timestamp) {
                 tvTime.setText(DateFormatUtils.long2Str(timestamp, true));
+            }
+
+            @Override
+            public void onNullSelected() {
+
             }
         }, beginTime, endTime);
         // 允许点击屏幕或物理返回键关闭
@@ -176,6 +193,9 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.tv_alert4:
                 setClick(tvAlert4);
+                break;
+            case R.id.iv_add_back:
+                finish();
                 break;
             case R.id.tv_add_time:
                 // 日期格式为yyyy-MM-dd HH:mm

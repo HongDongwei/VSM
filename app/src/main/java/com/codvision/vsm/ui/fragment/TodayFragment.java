@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codvision.vsm.R;
+import com.codvision.vsm.bean.Schedule;
 import com.codvision.vsm.ui.activity.AddScheduleActivity;
 import com.codvision.vsm.ui.activity.CalendarActivity;
+import com.codvision.vsm.ui.adapter.ScheduleAdapter;
+import com.codvision.vsm.ui.adapter.TodayScheduleAdapter;
 import com.codvision.vsm.utils.DayUtils;
 import com.codvision.vsm.utils.FindCommand;
 import com.codvision.vsm.utils.JsonParser;
@@ -45,10 +49,12 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class TodayFragment extends Fragment implements View.OnClickListener {
     /**
@@ -73,15 +79,21 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     private MaterialCalendarView materialCalendarView;//布局内的控件
     private CalendarDay currentDate;//自定义的日期对象
 
+    private ListView lvSchedule;
+    private List<Schedule> scheduleArrayList = new ArrayList<Schedule>();
+    private TodayScheduleAdapter todayScheduleAdapter;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_today, container, false);
         requestRecordAudioPermission();
         initView();
+        initSchedule();
         initEvent();
         initSpeech();
         initData();
         return view;
     }
+
 
     private void initView() {
         ibAdd = (ImageButton) view.findViewById(R.id.ib_add);
@@ -89,6 +101,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         tvDay = (TextView) view.findViewById(R.id.tv_today_day);
         tvWeek = (TextView) view.findViewById(R.id.tv_today_week);
         tvBack = (TextView) view.findViewById(R.id.tv_back);
+        todayScheduleAdapter = new TodayScheduleAdapter(getActivity(), R.layout.item_schedule, scheduleArrayList);
+        lvSchedule = view.findViewById(R.id.lv_schedule);
         // 实例化
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         findCommand = new FindCommand(getActivity());
@@ -98,6 +112,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         ibAdd.setOnClickListener(this);
         ivCalendar.setOnClickListener(this);
         tvBack.setOnClickListener(this);
+        lvSchedule.setAdapter(todayScheduleAdapter);
         ibAdd.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -105,6 +120,13 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
                 return true;
             }
         });
+    }
+
+    private void initSchedule() {
+        Schedule schedule1 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "英语学习", "9:00", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1));
+        scheduleArrayList.add(schedule1);
+        Schedule schedule2 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "看书", "9:00", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1));
+        scheduleArrayList.add(schedule2);
     }
 
     @Override

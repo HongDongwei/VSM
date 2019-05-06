@@ -47,7 +47,16 @@
             android:layout_marginStart="15dp"
             android:text="@string/current_date"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/iv_title_arrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_selected_date"
+            android:background="@drawable/arrow_up" />
 
         <ImageView
             android:id="@+id/iv_plan_add"
@@ -62,7 +71,7 @@
     <LinearLayout
         android:id="@+id/ll_plan"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="65dp"
         android:layout_below="@+id/ll_toobar"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
@@ -82,15 +91,15 @@
                 android:layout_height="wrap_content"
                 android:text="4"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="本月计划"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,15 +114,15 @@
                 android:layout_height="wrap_content"
                 android:text="4"
                 android:textColor="@color/plan_incomplete"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="未完成"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+
+                android:textSize="15sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -129,28 +138,30 @@
                 android:layout_height="wrap_content"
                 android:text="4"
                 android:textColor="@color/plan_complete"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="已完成"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+
+                android:textSize="15sp" />
         </LinearLayout>
 
 
     </LinearLayout>
 
     <ListView
-        android:id="@+id/list_view"
+        android:id="@+id/lv_plan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ll_plan"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
+        android:divider="#00000000"
+        android:dividerHeight="10dp"
         android:scrollbars="none"
         tools:listitem="@layout/plan_item" />
 </RelativeLayout>

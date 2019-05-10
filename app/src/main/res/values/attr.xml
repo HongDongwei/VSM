@@ -16,16 +16,6 @@
     <attr name="SearchTextSize" format="dimension" />
     <!--搜索文字颜色-->
     <attr name="SearchTextColor" format="color" />
-    <declare-styleable name="CommolySearchView">
-        <attr name="SearchBarIconMarginLeft" />
-        <attr name="SearchBarIconMarginRight" />
-        <attr name="SearchBarIconSrc" />
-        <attr name="ClearIconMarginLeft" />
-        <attr name="ClearIconMarginRight" />
-        <attr name="ClearIconSrc" />
-        <attr name="SearchTextSize" />
-        <attr name="SearchTextColor" />
-    </declare-styleable>
 
     <declare-styleable name="ItemView">
         <attr name="left_icon" format="integer" />//设置左侧图标

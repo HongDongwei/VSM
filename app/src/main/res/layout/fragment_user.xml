@@ -51,6 +51,7 @@
                 android:textSize="@dimen/text_size_name" />
 
             <TextView
+                android:id="@+id/tv_user_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

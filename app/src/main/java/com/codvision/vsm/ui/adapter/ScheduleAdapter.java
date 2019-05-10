@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codvision.vsm.R;
-import com.codvision.vsm.bean.Schedule;
+import com.codvision.vsm.module.bean.Schedule;
 
 import java.util.List;
 

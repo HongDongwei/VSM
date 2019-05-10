@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,10 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codvision.vsm.R;
-import com.codvision.vsm.bean.Schedule;
+import com.codvision.vsm.module.bean.Schedule;
 import com.codvision.vsm.ui.activity.AddScheduleActivity;
 import com.codvision.vsm.ui.activity.CalendarActivity;
-import com.codvision.vsm.ui.adapter.ScheduleAdapter;
 import com.codvision.vsm.ui.adapter.TodayScheduleAdapter;
 import com.codvision.vsm.utils.DayUtils;
 import com.codvision.vsm.utils.FindCommand;
@@ -123,9 +121,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initSchedule() {
-        Schedule schedule1 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "英语学习", "9:00", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1));
+        Schedule schedule1 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "英语学习", "9:00", 1, "1", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1), 1);
         scheduleArrayList.add(schedule1);
-        Schedule schedule2 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "看书", "9:00", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1));
+        Schedule schedule2 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "看书", "9:00", 1, "1", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1), 1);
         scheduleArrayList.add(schedule2);
     }
 

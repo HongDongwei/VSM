@@ -10,17 +10,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codvision.vsm.R;
-import com.codvision.vsm.bean.Schedule;
-import com.codvision.vsm.ui.MainActivity;
+import com.codvision.vsm.module.bean.Schedule;
 import com.codvision.vsm.ui.adapter.ScheduleAdapter;
 import com.codvision.vsm.utils.datepicker.CustomDatePicker;
 import com.codvision.vsm.utils.datepicker.DateFormatUtils;
 
-import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class PlanFragment extends Fragment implements View.OnClickListener {
     /**
@@ -53,9 +50,9 @@ public class PlanFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initPlan() {
-        Schedule schedule1 = new Schedule(1, new Date(2019, 1, 1), "1", "英语学习", "每天", 1, "1", 1, new Date(2019, 1, 1), new Date(2019, 1, 1));
+        Schedule schedule1 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "英语学习", "9:00", 1, "1", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1), 1);
         scheduleArrayList.add(schedule1);
-        Schedule schedule2 = new Schedule(1, new Date(2019, 1, 1), "1", "看书", "每天", 1, "1", 1, new Date(2019, 1, 1), new Date(2019, 1, 1));
+        Schedule schedule2 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "看书", "9:00", 1, "1", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1), 1);
         scheduleArrayList.add(schedule2);
     }
 

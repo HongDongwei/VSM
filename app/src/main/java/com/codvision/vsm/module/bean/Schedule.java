@@ -1,31 +1,56 @@
-package com.codvision.vsm.bean;
+package com.codvision.vsm.module.bean;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
 
-public class Schedule {
+/**
+ * Created by sxy on 2019/5/8 13:48
+ * todo
+ */
+public class Schedule implements Serializable {
+
     private int id;
+
     private Date time;
+
     private String place;
+
     private String thing;
+
     private String note;
+
     private int degree;
+
+    private String label;
+
+    private int isremind;
+
     private String type;
+
     private int state;
+
     private Date startdate;
+
     private Date enddate;
 
-    public Schedule(int id, Date time, String place, String thing, String note, int degree, String type, int state, Date startdate, Date enddate) {
+    private int s_userid;
+
+    public Schedule(int id, Date time, String place, String thing, String note, int degree, String label, int isremind, String type, int state, Date startdate, Date enddate, int s_userid) {
         this.id = id;
         this.time = time;
         this.place = place;
         this.thing = thing;
         this.note = note;
         this.degree = degree;
+        this.label = label;
+        this.isremind = isremind;
         this.type = type;
         this.state = state;
         this.startdate = startdate;
         this.enddate = enddate;
+        this.s_userid = s_userid;
     }
+
 
     public int getId() {
         return id;
@@ -75,6 +100,22 @@ public class Schedule {
         this.degree = degree;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public int getIsremind() {
+        return isremind;
+    }
+
+    public void setIsremind(int isremind) {
+        this.isremind = isremind;
+    }
+
     public String getType() {
         return type;
     }
@@ -107,5 +148,11 @@ public class Schedule {
         this.enddate = enddate;
     }
 
+    public int getS_userid() {
+        return s_userid;
+    }
 
+    public void setS_userid(int s_userid) {
+        this.s_userid = s_userid;
+    }
 }

@@ -19,6 +19,6 @@ public interface LoginContract {
         //成功
         void loginSuccess();
 
-        void loadFail(String code, String message);
+        void loginFail(String code, String message);
     }
 }

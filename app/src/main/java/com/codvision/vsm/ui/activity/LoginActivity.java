@@ -97,8 +97,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
-    public void loadFail(String code, String message) {
-        Log.i(TAG, "loadFail: " + message);
+    public void loginFail(String code, String message) {
+        Log.i(TAG, "loginFail: " + message);
         if ("1004".equals(code)) {
             inputPassword.setError("密码错误，请重新输入");
         } else if ("1005".equals(code)) {

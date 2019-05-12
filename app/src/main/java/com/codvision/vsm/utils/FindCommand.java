@@ -17,20 +17,32 @@ public class FindCommand {
         return year;
     }
 
-    public int getMonth() {
-        return month;
+    public String getMonth() {
+        if (month < 10) {
+            return "0" + month;
+        }
+        return month + "";
     }
 
-    public int getDay() {
-        return day;
+    public String getDay() {
+        if (day < 10) {
+            return "0" + day;
+        }
+        return day + "";
     }
 
-    public int getHour() {
-        return hour;
+    public String getHour() {
+        if (hour < 10) {
+            return "0" + hour;
+        }
+        return hour + "";
     }
 
-    public int getMinute() {
-        return minute;
+    public String getMinute() {
+        if (minute < 10) {
+            return "0" + minute;
+        }
+        return minute + "";
     }
 
     public FindCommand(Context context) {

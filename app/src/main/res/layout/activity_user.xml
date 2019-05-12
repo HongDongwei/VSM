@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/themeBgColor">
@@ -8,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -18,20 +17,21 @@
             android:background="@color/themeColor">
 
             <ImageButton
-                android:id="@+id/mLeftButton"
+                android:id="@+id/ib_user_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/white_left" />
+                android:layout_marginStart="5dp"
+                android:background="@drawable/white_left"
+                android:contentDescription="@string/explain_back" />
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="个人资料"
+                android:text="@string/title_user_data"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </RelativeLayout>
@@ -44,9 +44,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/iv_head_change"
                 android:gravity="center_vertical"
-                android:text="头像"
+                android:text="@string/user_head"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -55,17 +57,19 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/iv_head_right" />
+                android:layout_marginEnd="10dp"
+                android:layout_toStartOf="@+id/iv_head_right"
+                android:contentDescription="@string/explain_show_head" />
 
             <ImageView
                 android:id="@+id/iv_head_right"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/back_right" />
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/back_right"
+                android:contentDescription="@string/explain_able_modify" />
         </RelativeLayout>
 
         <View
@@ -82,9 +86,46 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/tv_id_change"
                 android:gravity="center_vertical"
-                android:text="昵称"
+                android:text="@string/user_id"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_id_change"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="9dp"
+                android:gravity="center_vertical|end"
+                android:text=""
+                android:textColor="@color/grey" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/tv_name_change"
+                android:gravity="center_vertical"
+                android:text="@string/user_name"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -93,21 +134,13 @@
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
-                android:layout_marginRight="9dp"
-                android:layout_toLeftOf="@+id/iv_name_right"
-                android:gravity="center_vertical|right"
-                android:text="请填写昵称"
+                android:layout_marginEnd="9dp"
+                android:gravity="center_vertical|end"
+                android:text=""
                 android:textColor="@color/grey" />
 
-            <ImageView
-                android:id="@+id/iv_name_right"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/back_right" />
         </RelativeLayout>
 
         <View
@@ -123,30 +156,33 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/tv_email_change"
                 android:gravity="center_vertical"
-                android:text="电话"
+                android:text="@string/user_email"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tv_tel_change"
+                android:id="@+id/tv_email_change"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="9dp"
-                android:layout_toLeftOf="@+id/iv_tel_right"
-                android:gravity="center_vertical|right"
-                android:text="15869109684"
+                android:layout_marginEnd="9dp"
+                android:layout_toStartOf="@+id/iv_email_right"
+                android:gravity="center_vertical|end"
+                android:text=""
                 android:textColor="@color/grey" />
 
             <ImageView
-                android:id="@+id/iv_tel_right"
+                android:id="@+id/iv_email_right"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/back_right" />
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/back_right"
+                android:contentDescription="@string/explain_able_modify" />
         </RelativeLayout>
 
 
@@ -163,9 +199,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/tv_sex_change"
                 android:gravity="center_vertical"
-                android:text="性别"
+                android:text="@string/user_sex"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -175,20 +213,21 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
-                android:layout_marginRight="9dp"
-                android:layout_toLeftOf="@+id/iv_sex_right"
-                android:gravity="center_vertical|right"
-                android:text="保密"
+                android:layout_marginEnd="9dp"
+                android:layout_toStartOf="@+id/iv_sex_right"
+                android:gravity="center_vertical|end"
+                android:text=""
                 android:textColor="@color/grey" />
 
             <ImageView
                 android:id="@+id/iv_sex_right"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/back_right" />
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/back_right"
+                android:contentDescription="@string/explain_able_modify" />
         </RelativeLayout>
 
 
@@ -205,9 +244,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/tv_sign_change"
                 android:gravity="center_vertical"
-                android:text="个性签名"
+                android:text="@string/user_sign"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -215,20 +256,21 @@
                 android:id="@+id/tv_sign_change"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="9dp"
-                android:layout_toLeftOf="@+id/iv_sign_right"
-                android:gravity="center_vertical|right"
-                android:text="请编辑签名"
+                android:layout_marginEnd="9dp"
+                android:layout_toStartOf="@+id/iv_sign_right"
+                android:gravity="center_vertical|end"
+                android:text=""
                 android:textColor="@color/grey" />
 
             <ImageView
                 android:id="@+id/iv_sign_right"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/back_right" />
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/back_right"
+                android:contentDescription="@string/explain_able_modify" />
         </RelativeLayout>
 
         <View
@@ -244,31 +286,39 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/tv_pwd_change"
                 android:gravity="center_vertical"
-                android:text="生日"
+                android:text="@string/user_pwd"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tv_age_change"
+                android:id="@+id/tv_pwd_change"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="9dp"
-                android:layout_toLeftOf="@+id/iv_age_right"
-                android:gravity="center_vertical|right"
-                android:text="未设置"
+                android:layout_marginEnd="9dp"
+                android:layout_toStartOf="@+id/iv_pwd_right"
+                android:gravity="center_vertical|end"
+                android:text=""
                 android:textColor="@color/grey" />
 
             <ImageView
-                android:id="@+id/iv_age_right"
+                android:id="@+id/iv_pwd_right"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/back_right" />
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/back_right"
+                android:contentDescription="@string/explain_able_modify" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey" />
 
         <TextView
             android:id="@+id/tv_save"
@@ -279,7 +329,7 @@
             android:layout_marginRight="30dp"
             android:background="@drawable/bg_save"
             android:gravity="center"
-            android:text="保存"
+            android:text="@string/user_save"
             android:textColor="@color/white"
             android:textSize="20sp" />
 

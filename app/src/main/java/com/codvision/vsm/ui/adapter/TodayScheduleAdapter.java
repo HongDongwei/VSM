@@ -46,7 +46,7 @@ public class TodayScheduleAdapter extends ArrayAdapter<Schedule> {
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.scheduleAim.setText(schedule.getThing());
-        viewHolder.scheduleTime.setText(schedule.getNote());
+        viewHolder.scheduleTime.setText(schedule.getPlace());
         return view;
     }
 

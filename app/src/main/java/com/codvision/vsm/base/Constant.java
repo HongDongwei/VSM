@@ -23,4 +23,5 @@ public class Constant {
     public static String LOAING = "正在加载";
     public static String LOGINING = "正在登录";
     public static String REGISTERING = "正在注册";
+    public static String SUBMITING = "正在提交";
 }

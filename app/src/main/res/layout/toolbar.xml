@@ -6,7 +6,7 @@
     android:background="@color/themeColor">
 
     <ImageButton
-        android:id="@+id/mLeftButton"
+        android:id="@+id/ib_user_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentLeft="true"

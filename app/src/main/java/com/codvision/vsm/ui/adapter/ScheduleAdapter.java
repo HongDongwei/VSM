@@ -49,7 +49,7 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.planAim.setText(schedule.getThing());
-        viewHolder.planTime.setText(schedule.getNote());
+        viewHolder.planTime.setText(schedule.getPlace());
         viewHolder.planWeight.setText("1%");
         viewHolder.progressBar.setProgress(2);
         return view;

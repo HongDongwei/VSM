@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
     @Override
     public void registerFail(String code, String message) {
-        Log.i(TAG, "loadFail: " + message);
+        Log.i(TAG, "loginFail: " + message);
         if ("1002".equals(code)) {
             inputUser.setError("账号已存在，请重新输入");
         } else if ("1003".equals(code)) {

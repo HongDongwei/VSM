@@ -34,12 +34,12 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void login(String user, final String pwd) {
-        Log.i(TAG, "login: user=" + user + "pwd=" + pwd);
+    public void login(String name, final String pwd) {
+        Log.i(TAG, "login: name=" + name + "pwd=" + pwd);
         Map<String, String> map = new HashMap<>();
-        map.put("username", user);
+        map.put("username", name);
         map.put("password", pwd);
-
+        Log.i(TAG, "register: " + map);
         RetrofitUtil.getInstance().initRetrofit().login(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -49,16 +49,16 @@ public class LoginPresenter implements LoginContract.Presenter {
                         if (wrapperEntity.getStatus()) {
                             view.loginSuccess();
                             User user = new User(wrapperEntity.getData(), pwd, true);
-                            Log.i(TAG, "onSuccees: user.pwad=" + user.getPassword());
+                            Log.i(TAG, "onSuccees: name.pwad=" + user.getPassword());
                             SharedPreferenceUtils.putSelfInfo(context, user);
                         } else {
-                            view.loadFail(wrapperEntity.getCode(), wrapperEntity.getCode() + ": " + wrapperEntity.getMessage());
+                            view.loginFail(wrapperEntity.getCode(), wrapperEntity.getCode() + ": " + wrapperEntity.getMessage());
                         }
                     }
 
                     @Override
                     protected void onFailure(Throwable e, boolean isNetWorkError) throws Exception {
-                        view.loadFail("1", "连接服务器失败，请检查网与服务器");
+                        view.loginFail("1", "连接服务器失败，请检查网与服务器");
                     }
                 });
     }

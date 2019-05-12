@@ -67,10 +67,10 @@ public class User implements Serializable {
         id = preferences.getInt("id", 0);
         username = preferences.getString("username", "");
         password = preferences.getString("password", "");
-        email = preferences.getString("email", "");
-        image = preferences.getString("image", "");
+        email = preferences.getString("email", "您还没有邮箱");
+        image = preferences.getString("image", "您还没有头像");
         gender = preferences.getInt("gender", 0);
-        intro = preferences.getString("intro", "");
+        intro = preferences.getString("intro", "您还没有签名");
         state = preferences.getBoolean("state", false);
     }
 

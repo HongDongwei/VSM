@@ -19,14 +19,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codvision.vsm.App;
 import com.codvision.vsm.R;
+import com.codvision.vsm.module.bean.GetSchedule;
 import com.codvision.vsm.module.bean.Schedule;
+import com.codvision.vsm.presenter.GetSchedulePresenter;
+import com.codvision.vsm.presenter.contract.GetScheduleContract;
 import com.codvision.vsm.ui.activity.AddScheduleActivity;
 import com.codvision.vsm.ui.activity.CalendarActivity;
 import com.codvision.vsm.ui.adapter.TodayScheduleAdapter;
 import com.codvision.vsm.utils.DayUtils;
 import com.codvision.vsm.utils.FindCommand;
 import com.codvision.vsm.utils.JsonParser;
+import com.codvision.vsm.utils.SharedPreferenceUtils;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -47,6 +52,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +60,10 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class TodayFragment extends Fragment implements View.OnClickListener {
+import static com.codvision.vsm.utils.DayUtils.isDay;
+
+public class TodayFragment extends Fragment implements View.OnClickListener, GetScheduleContract.View {
+
     /**
      * TAG
      */
@@ -76,16 +85,22 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     private MaterialCalendarView materialCalendarView;//布局内的控件
     private CalendarDay currentDate;//自定义的日期对象
-
+    private Calendar todayDate;
     private ListView lvSchedule;
     private List<Schedule> scheduleArrayList = new ArrayList<Schedule>();
     private TodayScheduleAdapter todayScheduleAdapter;
+
+    private GetSchedulePresenter presenter;
+    private GetSchedule getSchedule;
+    private int year;
+    private int month;
+    private int day;
+    private String time;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_today, container, false);
         requestRecordAudioPermission();
         initView();
-        initSchedule();
         initEvent();
         initSpeech();
         initData();
@@ -94,6 +109,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
 
     private void initView() {
+        // 实例化
         ibAdd = (ImageButton) view.findViewById(R.id.ib_add);
         ivCalendar = (ImageView) view.findViewById(R.id.iv_calendar);
         tvDay = (TextView) view.findViewById(R.id.tv_today_day);
@@ -101,9 +117,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         tvBack = (TextView) view.findViewById(R.id.tv_back);
         todayScheduleAdapter = new TodayScheduleAdapter(getActivity(), R.layout.item_schedule, scheduleArrayList);
         lvSchedule = view.findViewById(R.id.lv_schedule);
-        // 实例化
+        presenter = new GetSchedulePresenter(this, getActivity());
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         findCommand = new FindCommand(getActivity());
+        todayDate = Calendar.getInstance();
     }
 
     private void initEvent() {
@@ -121,10 +138,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initSchedule() {
-        Schedule schedule1 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "英语学习", "9:00", 1, "1", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1), 1);
-        scheduleArrayList.add(schedule1);
-        Schedule schedule2 = new Schedule(1, new java.sql.Date(2019, 1, 1), "1", "看书", "9:00", 1, "1", 1, "1", 1, new java.sql.Date(2019, 1, 1), new java.sql.Date(2019, 1, 1), 1);
-        scheduleArrayList.add(schedule2);
+
     }
 
     @Override
@@ -138,23 +152,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(getActivity(), AddScheduleActivity.class);
                 startActivity(intent);
                 break;
-//            case R.id.bt_get_time:
-//                if (currentDate != null) {
-//                    int year = currentDate.getYear();
-//                    int month = currentDate.getMonth() + 1; //月份跟系统一样是从0开始的，实际获取时要加1
-//                    int day = currentDate.getDay();
-//                    Toast.makeText(getActivity(), currentDate.toString() + "你选中的是：" + year + "-" + month + "-" + day, Toast.LENGTH_LONG).show();
-//                } else {
-//                    Toast.makeText(getActivity(), "请选择时间", Toast.LENGTH_LONG).show();
-//                }
-//                break;
-//            case R.id.bt_turn_time: //语音识别（把声音转文字）
-//                // 设置日历默认的时间为当前的时间
-//                materialCalendarView.setSelectedDate(new Date());
-//                break;
             case R.id.tv_back: //语音识别（把声音转文字）
                 materialCalendarView.setSelectedDate(new Date());
-                initToady(true, currentDate);
+                initToady(true, CalendarDay.from(new Date()));
                 break;
             default:
                 break;
@@ -162,20 +162,36 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initToady(Boolean today, CalendarDay currentDate) {
+        year = currentDate.getYear();
+        month = currentDate.getMonth() + 1; //月份跟系统一样是从0开始的，实际获取时要加1
+        day = currentDate.getDay();
+        time = year + "-";
+        if (month < 10) {
+            time += "0" + month;
+        } else {
+            time += month;
+        }
+
+        if (day < 10) {
+            time += "-" + "0" + day;
+        } else {
+            time += "-" + day;
+        }
         if (today) {
             tvWeek.setVisibility(View.GONE);
             tvBack.setVisibility(View.GONE);
             tvDay.setText("今日日程");
+
         } else {
-            int year = currentDate.getYear();
-            int month = currentDate.getMonth() + 1; //月份跟系统一样是从0开始的，实际获取时要加1
-            int day = currentDate.getDay();
             tvWeek.setVisibility(View.VISIBLE);
             tvBack.setVisibility(View.VISIBLE);
-            tvDay.setText(month + "月" + day + "日");
+            tvDay.setText(time);
             tvWeek.setText("周" + DayUtils.getWeek(year, month, day));
         }
         materialCalendarView.state().edit().commit();
+        getSchedule = new GetSchedule(time, SharedPreferenceUtils.getUserId(getActivity()));
+        Log.i(TAG, "initToady: getSchedule" + getSchedule.getTime());
+        presenter.getSchedule(getSchedule);
     }
 
     private void initData() {
@@ -233,6 +249,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
         mTts.startSpeaking(s, new MySynthesizerListener());
 
     }
+
 
     class MySynthesizerListener implements SynthesizerListener {
 
@@ -456,5 +473,30 @@ public class TodayFragment extends Fragment implements View.OnClickListener {
 
     private void showTip(String data) {
         Toast.makeText(getActivity(), data, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getScheduleSuccess(ArrayList<Schedule> arrayList) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Log.i(TAG, "getScheduleSuccess: 成功了" + arrayList.size() + " day:" + df.format(arrayList.get(0).getStartdate()));
+        scheduleArrayList.clear();
+        for (int i = 0; i < arrayList.size(); i++) {
+            Schedule schedule = arrayList.get(i);
+            if (schedule.getNote().equals("0")) {
+                scheduleArrayList.add(schedule);
+            } else {
+                if (isDay(Integer.parseInt(schedule.getNote()), df.format(schedule.getStartdate()) + "", df.format(schedule.getEnddate()) + "", time)) {
+                    Log.i(TAG, "getScheduleSuccess: true");
+                    scheduleArrayList.add(schedule);
+                }
+            }
+
+        }
+        todayScheduleAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getScheduleFail(String code, String message) {
+        Log.i(TAG, "loginFail: " + message);
     }
 }

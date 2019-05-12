@@ -75,7 +75,7 @@ public class ScheduleConfirmService extends Service {
                                 }
                             }
                         }).start();
-                        Log.i(TAG, "run: " + calendar.toString());
+                     //   Log.i(TAG, "run: " + calendar.toString());
 
                     } catch (
                             Exception e) {

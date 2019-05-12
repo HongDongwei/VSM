@@ -84,8 +84,8 @@ public class LeadActivity extends AppCompatActivity implements LoginContract.Vie
     }
 
     @Override
-    public void loadFail(String code, String message) {
-        Log.i(TAG, "loadFail: " + message);
+    public void loginFail(String code, String message) {
+        Log.i(TAG, "loginFail: " + message);
         Toast.makeText(LeadActivity.this, "用户还未登录", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(LeadActivity.this, LoginActivity.class);
         startActivity(intent);

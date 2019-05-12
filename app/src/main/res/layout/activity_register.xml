@@ -35,7 +35,7 @@
             android:layout_height="50dp">
 
             <ImageButton
-                android:id="@+id/mLeftButton"
+                android:id="@+id/ib_user_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
@@ -87,7 +87,6 @@
                         android:layout_marginLeft="8dp"
                         android:background="@null"
                         android:hint="请输入您要注册的用户名"
-                        android:inputType="textPassword"
                         android:textColor="#000000"
                         android:textColorHint="#D0D0D0"
                         android:textSize="20sp" />

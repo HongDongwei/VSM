@@ -18,6 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.activity.AddPlanDetialActivity"></activity>
+        <activity android:name=".ui.activity.AddPlanActivity" />
         <activity android:name=".ui.activity.LeadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +35,7 @@
             android:name=".ui.activity.AddScheduleActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activity.CalendarActivity" />
-        <activity android:name=".ui.MainActivity"></activity>
+        <activity android:name=".ui.MainActivity" />
 
         <service
             android:name=".serice.ScheduleConfirmService"

@@ -1,8 +1,19 @@
 package com.codvision.vsm.utils;
 
+import android.util.Log;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DayUtils {
+
+    /**
+     * TAG
+     */
+    public static final String TAG = "DayUtils";
+
     public static String getWeek(int year, int month, int day) {
         String s = "";
         Calendar c = Calendar.getInstance(); //获得当前年月日
@@ -39,5 +50,57 @@ public class DayUtils {
 
     public static String getTime(Calendar calendar) {
         return calendar.get(Calendar.HOUR) + "点" + calendar.get(Calendar.MINUTE) + "分";
+    }
+
+    public static boolean isDay(int interval, String fristDate, String endData, String checkDate) {
+        Log.i(TAG, "isDay: interval=" + interval + " fristDate=" + fristDate + "checkDate=" + checkDate);
+        Date fring = null, check = null, end = null;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            fring = df.parse(fristDate);
+            check = df.parse(checkDate);
+            end = df.parse(endData);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; check.compareTo(fring) >= 0 && end.compareTo(fring) >= 0; i += interval) {
+            Log.i(TAG, "isDay: i=" + i + " fristDate=" + df.format(fring.getTime()) + "checkDate=" + checkDate);
+            if (check.compareTo(fring) == 0) {
+                return true;
+            }
+            fring = new Date(fring.getTime() + interval * 24 * 60 * 60 * 1000);
+        }
+        return false;
+    }
+
+    public static boolean isMounth(String fristDate, String endData, String checkDate) {
+        Log.i(TAG, "isDay: fristDate=" + fristDate + " endData=" + endData + "checkDate=" + checkDate);
+        if (getYear(fristDate) <= getYear(checkDate) && getYear(checkDate) <= getYear(endData)) {
+            if (getMounth(fristDate) <= getMounth(checkDate) && getMounth(checkDate) <= getMounth(endData)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int getYear(String time) {
+        String year = time.charAt(0) + "" + time.charAt(1) + time.charAt(2) + time.charAt(3);
+        return Integer.parseInt(year);
+    }
+
+    public static int getMounth(String time) {
+        String moubth = time.charAt(5) + "" + time.charAt(6);
+        return Integer.parseInt(moubth);
+    }
+
+    public static String getDay(String time) {
+
+        return time.charAt(0) + "" + time.charAt(1) + time.charAt(2) + time.charAt(3) + time.charAt(4) + time.charAt(5) + time.charAt(6) + time.charAt(7) + time.charAt(8) + time.charAt(9);
+
+    }
+
+    public static String getTime(String time) {
+        return time.charAt(11) + "" + time.charAt(12) + time.charAt(13) + time.charAt(14) + time.charAt(15);
+
     }
 }

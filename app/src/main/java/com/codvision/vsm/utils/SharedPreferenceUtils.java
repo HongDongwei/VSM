@@ -56,6 +56,9 @@ public class SharedPreferenceUtils {
         return getSharedPreference(context, User.class.getSimpleName()).getBoolean("state", false);
     }
 
+    public static int getUserId(Context context) {
+        return getSharedPreference(context, User.class.getSimpleName()).getInt("id", 0);
+    }
 
     private static SharedPreferences getSp(Context context) {
         if (mPreferences == null) {

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codvision.vsm.R;
 import com.codvision.vsm.module.bean.User;
 import com.codvision.vsm.ui.activity.SettingActivity;
@@ -19,6 +20,8 @@ import com.codvision.vsm.ui.activity.UserActivity;
 import com.codvision.vsm.utils.SharedPreferenceUtils;
 
 import java.util.PropertyResourceBundle;
+
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
     /**
@@ -29,6 +32,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private View view;
     private RelativeLayout rlUserSet;
     private ImageView tvSet;
+    private ImageView ivHead;
     private TextView tvName;
     private TextView tvSign;
     private User user;
@@ -40,20 +44,39 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
+
     private void initView() {
         rlUserSet = view.findViewById(R.id.rl_user_set);
         tvSet = view.findViewById(R.id.tv_set);
         tvName = view.findViewById(R.id.tv_user_name);
         tvSign = view.findViewById(R.id.tv_user_sign);
-        user = SharedPreferenceUtils.getUser(getActivity());
+        ivHead = view.findViewById(R.id.iv_user_head);
     }
 
     private void initEvent() {
         rlUserSet.setOnClickListener(this);
         tvSet.setOnClickListener(this);
+    }
 
+    @Override
+    public void onResume() {
+        user = SharedPreferenceUtils.getUser(getActivity());
+        changeHeadPic(R.drawable.head_default, ivHead);
         tvName.setText(user.getUsername());
         tvSign.setText(user.getIntro());
+        super.onResume();
+    }
+
+    /**
+     * 设置圆形图像
+     *
+     * @param src       图片对象
+     * @param imageView 设置图片的控件
+     */
+    private void changeHeadPic(Object src, ImageView imageView) {
+        Glide.with(this).load(src)
+                .bitmapTransform(new CropCircleTransformation(getActivity()))
+                .into(imageView);
     }
 
     @Override

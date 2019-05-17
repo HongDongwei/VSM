@@ -42,7 +42,7 @@ public class InsertPresenter implements InsertContract.Presenter {
         RetrofitUtil.getInstance().initRetrofit().insert(insert)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<InsertId>(context, Constant.LOGINING) {
+                .subscribe(new BaseObserver<InsertId>(context, Constant.SUBMITING) {
                     @Override
                     protected void onSuccees(WrapperEntity<InsertId> wrapperEntity) throws Exception {
                         if (wrapperEntity.getStatus()) {

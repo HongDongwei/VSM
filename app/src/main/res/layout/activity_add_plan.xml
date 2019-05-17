@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,13 +14,15 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:background="@color/themeColor" />
+            android:background="@color/themeColor"
+            android:contentDescription="@string/explain_bg_up" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
-            android:background="@color/themeBgColor" />
+            android:background="@color/themeBgColor"
+            android:contentDescription="@string/explain_bg_down" />
 
     </LinearLayout>
 
@@ -38,17 +39,18 @@
                 android:id="@+id/ib_login_finish"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/white_left" />
+                android:layout_marginStart="5dp"
+                android:background="@drawable/white_left"
+                android:contentDescription="@string/explain_back" />
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="添加计划"
+                android:text="@string/title_add_plan"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -57,9 +59,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="计划表"
+            android:text="@string/schedule"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -67,18 +69,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="有计划的生活即使紧张，却井然有序。"
+            android:text="@string/plan_content_1"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="有计划的工作即使繁忙，却高效充实。"
+            android:text="@string/plan_content_2"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -95,184 +97,89 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
-                <LinearLayout
+
+                <TextView
+                    android:id="@+id/tv_plan_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/book"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:text="@string/plan_type_1" />
 
-                    <ImageView
-                        android:id="@+id/iv_plan_1"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/book" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="看书" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_plan_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/play_ball"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:text="@string/plan_type_2" />
 
-                    <ImageView
-                        android:id="@+id/iv_plan_2"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/building" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="锻炼" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_plan_3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/doctor"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:text="@string/plan_type_3" />
 
-                    <ImageView
-                        android:id="@+id/iv_plan_3"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/doctor" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="看病" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_plan_4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/eg_study"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/iv_plan_4"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/eg_study" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="学习" />
-                </LinearLayout>
+                    android:text="@string/plan_type_4" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
-                <LinearLayout
+
+                <TextView
+                    android:id="@+id/tv_plan_5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/painting"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:text="@string/plan_type_5" />
 
-                    <ImageView
-                        android:id="@+id/iv_plan_5"
-                        android:layout_width="40dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/painting" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="绘画" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_plan_6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/run"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:text="@string/plan_type_6" />
 
-                    <ImageView
-                        android:id="@+id/iv_plan_6"
-                        android:layout_width="40dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/run" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="跑步" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_plan_7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/water"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:text="@string/plan_type_7" />
 
-                    <ImageView
-                        android:id="@+id/iv_plan_7"
-                        android:layout_width="40dp"
-                        android:layout_height="35dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/water" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="喝水" />
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_plan_8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
+                    android:drawableTop="@drawable/add_item"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/iv_plan_8"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/add_item" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="不添加" />
-                </LinearLayout>
+                    android:text="@string/plan_type_8" />
             </LinearLayout>
 
         </LinearLayout>

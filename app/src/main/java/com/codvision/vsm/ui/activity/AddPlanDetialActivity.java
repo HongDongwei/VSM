@@ -92,6 +92,10 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initEvent() {
+        tvAlert1.setOnClickListener(this);
+        tvAlert2.setOnClickListener(this);
+        tvAlert3.setOnClickListener(this);
+        tvAlert4.setOnClickListener(this);
         tvStartTime.setOnClickListener(this);
         tvEndTime.setOnClickListener(this);
         btSave.setOnClickListener(this);
@@ -117,8 +121,20 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
                         insertPresenter.insert(insert);
                     }
                 }
-
                 break;
+            case R.id.tv_alert1:
+                setClick(tvAlert1, 1);
+                break;
+            case R.id.tv_alert2:
+                setClick(tvAlert2, 2);
+                break;
+            case R.id.tv_alert3:
+                setClick(tvAlert3, 3);
+                break;
+            case R.id.tv_alert4:
+                setClick(tvAlert4, 4);
+                break;
+
             default:
                 break;
         }

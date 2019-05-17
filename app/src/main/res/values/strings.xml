@@ -4,7 +4,7 @@
     <string name="today">今日</string>
     <string name="plan">计划</string>
     <string name="user">我的</string>
-
+    <string name="schedule">计划表</string>
 
     <string name="datescroller_sunday">星期日</string>
     <string name="datescroller_monday">星期一</string>
@@ -46,11 +46,15 @@
     <!--标题-->
     <string name="title_user_data">个人资料</string>
     <string name="title_add_schedule">添加日程</string>
+    <string name="title_add_plan">添加计划</string>
     <!--控件备注-->
-    <string name="explain_back">返回上一个页面</string>\
+    <string name="explain_back">返回上一个页面</string>
     <string name="explain_show_head">显示头像</string>
     <string name="explain_able_modify">可修改</string>
     <string name="explain_icon">图标</string>
+    <string name="explain_plan_type">计划种类图标</string>
+    <string name="explain_bg_up">背景上半部分</string>
+    <string name="explain_bg_down">背景下半部分</string>
     <!--用户-->
     <string name="user_name_default">昵称</string>
     <string name="user_sign_default">编辑个性签名</string>
@@ -66,4 +70,16 @@
     <string name="user_save">保存</string>
     <!--添加日程-->
     <string name="schedule_reminder_time">提醒时间</string>
+    <!--添加计划-->
+    <string name="plan_content_1">有计划的生活即使紧张，却井然有序。</string>
+    <string name="plan_content_2">有计划的工作即使繁忙，却高效充实。</string>
+    <string name="plan_type_1">看书</string>
+    <string name="plan_type_2">打球</string>
+    <string name="plan_type_3">看病</string>
+    <string name="plan_type_4">学习</string>
+    <string name="plan_type_5">绘画</string>
+    <string name="plan_type_6">健身</string>
+    <string name="plan_type_7">喝水</string>
+    <string name="plan_type_8">不添加</string>
+
 </resources>

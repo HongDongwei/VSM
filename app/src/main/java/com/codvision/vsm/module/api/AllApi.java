@@ -2,6 +2,7 @@ package com.codvision.vsm.module.api;
 
 
 import com.codvision.vsm.base.WrapperEntity;
+import com.codvision.vsm.module.bean.DeleteSchedule;
 import com.codvision.vsm.module.bean.GetSchedule;
 import com.codvision.vsm.module.bean.Insert;
 import com.codvision.vsm.module.bean.InsertId;
@@ -52,5 +53,10 @@ public interface AllApi {
      */
     @POST(ApiAddress.SELECT)
     Observable<WrapperEntity<ArrayList<Schedule>>> select(@Body GetSchedule getSchedule);
+    /**
+     * 删除日程
+     */
+    @POST(ApiAddress.DELETE)
+    Observable<WrapperEntity<ArrayList<Schedule>>> delete(@Body DeleteSchedule deleteSchedule);
 
 }

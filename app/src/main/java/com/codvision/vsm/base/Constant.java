@@ -24,4 +24,6 @@ public class Constant {
     public static String LOGINING = "正在登录";
     public static String REGISTERING = "正在注册";
     public static String SUBMITING = "正在提交";
+    public static String GETING = "正在获取";
+    public static String DELETE = "正在删除";
 }

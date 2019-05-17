@@ -5,13 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.codvision.vsm.R;
 import com.codvision.vsm.ui.MainActivity;
 
 public class AddPlanActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView ivPlan1, ivPlan2, ivPlan3, ivPlan4, ivPlan5, ivPlan6, ivPlan7, ivPlan8;
+    private TextView ivPlan1, ivPlan2, ivPlan3, ivPlan4, ivPlan5, ivPlan6, ivPlan7, ivPlan8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +23,14 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
-        ivPlan1 = findViewById(R.id.iv_plan_1);
-        ivPlan2 = findViewById(R.id.iv_plan_2);
-        ivPlan3 = findViewById(R.id.iv_plan_3);
-        ivPlan4 = findViewById(R.id.iv_plan_4);
-        ivPlan5 = findViewById(R.id.iv_plan_5);
-        ivPlan6 = findViewById(R.id.iv_plan_6);
-        ivPlan7 = findViewById(R.id.iv_plan_7);
-        ivPlan8 = findViewById(R.id.iv_plan_8);
+        ivPlan1 = findViewById(R.id.tv_plan_1);
+        ivPlan2 = findViewById(R.id.tv_plan_2);
+        ivPlan3 = findViewById(R.id.tv_plan_3);
+        ivPlan4 = findViewById(R.id.tv_plan_4);
+        ivPlan5 = findViewById(R.id.tv_plan_5);
+        ivPlan6 = findViewById(R.id.tv_plan_6);
+        ivPlan7 = findViewById(R.id.tv_plan_7);
+        ivPlan8 = findViewById(R.id.tv_plan_8);
     }
 
     private void initEvent() {
@@ -47,42 +48,42 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_plan_1:
+            case R.id.tv_plan_1:
                 Intent intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "1");
                 startActivity(intent);
                 break;
-            case R.id.iv_plan_2:
+            case R.id.tv_plan_2:
                 intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "2");
                 startActivity(intent);
                 break;
-            case R.id.iv_plan_3:
+            case R.id.tv_plan_3:
                 intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "3");
                 startActivity(intent);
                 break;
-            case R.id.iv_plan_4:
+            case R.id.tv_plan_4:
                 intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "4");
                 startActivity(intent);
                 break;
-            case R.id.iv_plan_5:
+            case R.id.tv_plan_5:
                 intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "5");
                 startActivity(intent);
                 break;
-            case R.id.iv_plan_6:
+            case R.id.tv_plan_6:
                 intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "6");
                 startActivity(intent);
                 break;
-            case R.id.iv_plan_7:
+            case R.id.tv_plan_7:
                 intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "7");
                 startActivity(intent);
                 break;
-            case R.id.iv_plan_8:
+            case R.id.tv_plan_8:
                 intent = new Intent(AddPlanActivity.this, AddPlanDetialActivity.class);
                 intent.putExtra("plan_type", "8");
                 startActivity(intent);

@@ -2,6 +2,7 @@ package com.codvision.vsm.ui.fragment;
 
 import android.Manifest;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
@@ -9,21 +10,25 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codvision.vsm.App;
 import com.codvision.vsm.R;
+import com.codvision.vsm.module.bean.DeleteSchedule;
 import com.codvision.vsm.module.bean.GetSchedule;
 import com.codvision.vsm.module.bean.Schedule;
+import com.codvision.vsm.presenter.DeleteSchedulePresenter;
 import com.codvision.vsm.presenter.GetSchedulePresenter;
+import com.codvision.vsm.presenter.contract.DeleteScheduleContract;
 import com.codvision.vsm.presenter.contract.GetScheduleContract;
 import com.codvision.vsm.ui.activity.AddScheduleActivity;
 import com.codvision.vsm.ui.activity.CalendarActivity;
@@ -62,7 +67,7 @@ import java.util.List;
 
 import static com.codvision.vsm.utils.DayUtils.isDay;
 
-public class TodayFragment extends Fragment implements View.OnClickListener, GetScheduleContract.View {
+public class TodayFragment extends Fragment implements View.OnClickListener, GetScheduleContract.View, DeleteScheduleContract.View {
 
     /**
      * TAG
@@ -90,7 +95,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
     private List<Schedule> scheduleArrayList = new ArrayList<Schedule>();
     private TodayScheduleAdapter todayScheduleAdapter;
 
-    private GetSchedulePresenter presenter;
+    private GetSchedulePresenter getSchedulePresenter;
+    private DeleteSchedulePresenter deleteSchedulePresenter;
     private GetSchedule getSchedule;
     private int year;
     private int month;
@@ -107,6 +113,13 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
         return view;
     }
 
+    @Override
+    public void onResume() {
+        materialCalendarView.setSelectedDate(new Date());
+        initToady(true, CalendarDay.from(new Date()));
+        super.onResume();
+    }
+
 
     private void initView() {
         // 实例化
@@ -117,7 +130,8 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
         tvBack = (TextView) view.findViewById(R.id.tv_back);
         todayScheduleAdapter = new TodayScheduleAdapter(getActivity(), R.layout.item_schedule, scheduleArrayList);
         lvSchedule = view.findViewById(R.id.lv_schedule);
-        presenter = new GetSchedulePresenter(this, getActivity());
+        getSchedulePresenter = new GetSchedulePresenter(this, getActivity());
+        deleteSchedulePresenter = new DeleteSchedulePresenter(this, getActivity());
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         findCommand = new FindCommand(getActivity());
         todayDate = Calendar.getInstance();
@@ -135,10 +149,42 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
                 return true;
             }
         });
+        lvSchedule.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showNormalDialog(position);
+                return false;
+            }
+        });
     }
 
-    private void initSchedule() {
-
+    private void showNormalDialog(final int position) {
+        /* @setIcon 设置对话框图标
+         * @setTitle 设置对话框标题
+         * @setMessage 设置对话框消息提示
+         * setXXX方法返回Dialog对象，因此可以链式设置属性
+         */
+        final AlertDialog.Builder normalDialog =
+                new AlertDialog.Builder(getActivity());
+        normalDialog.setTitle("温馨提示：");
+        normalDialog.setMessage("请问是否删除该进程?");
+        normalDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                        deleteSchedulePresenter.deleteSchedule(new DeleteSchedule(scheduleArrayList.get(position).getId()));
+                    }
+                });
+        normalDialog.setNegativeButton("关闭",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //...To-do
+                    }
+                });
+        // 显示
+        normalDialog.show();
     }
 
     @Override
@@ -191,17 +237,17 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
         materialCalendarView.state().edit().commit();
         getSchedule = new GetSchedule(time, SharedPreferenceUtils.getUserId(getActivity()));
         Log.i(TAG, "initToady: getSchedule" + getSchedule.getTime());
-        presenter.getSchedule(getSchedule);
+        getSchedulePresenter.getSchedule(getSchedule);
     }
 
     private void initData() {
+
         // 显示兴起补全的整个礼拜的上个月或者下个月的日期 一般会多出一行整个礼拜
         // 点击补全出来的另外一个月的信息 可以直接跳到那个月
         materialCalendarView.setShowOtherDates(MaterialCalendarView.SHOW_ALL);
         // 设置日历默认的时间为当前的时间
         materialCalendarView.setSelectedDate(new Date());
-        currentDate = CalendarDay.from(new Date());
-        initToady(true, currentDate);
+        initToady(true, CalendarDay.from(new Date()));
         //编辑日历属性
         materialCalendarView.state().edit()
                 .setFirstDayOfWeek(Calendar.MONDAY)   //设置每周开始的第一天
@@ -498,5 +544,17 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
     @Override
     public void getScheduleFail(String code, String message) {
         Log.i(TAG, "loginFail: " + message);
+    }
+
+    @Override
+    public void deleteScheduleSuccess(ArrayList<Schedule> arrayList) {
+        getSchedule = new GetSchedule(time, SharedPreferenceUtils.getUserId(getActivity()));
+        Log.i(TAG, "initToady: getSchedule" + getSchedule.getTime());
+        getSchedulePresenter.getSchedule(getSchedule);
+    }
+
+    @Override
+    public void deleteScheduleFail(String code, String message) {
+        Log.i(TAG, "deleteScheduleFail: message:" + message);
     }
 }

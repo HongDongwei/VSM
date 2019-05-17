@@ -41,7 +41,7 @@ public class InfoSubmitPresenter implements InfoSubmitContract.Presenter {
         RetrofitUtil.getInstance().initRetrofit().submit(new Submit(user))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<InsertId>(context, Constant.LOGINING) {
+                .subscribe(new BaseObserver<InsertId>(context, Constant.SUBMITING) {
                     @Override
                     protected void onSuccees(WrapperEntity<InsertId> wrapperEntity) throws Exception {
                         if (wrapperEntity.getStatus()) {

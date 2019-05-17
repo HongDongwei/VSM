@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -101,6 +102,7 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
             startCommand(NewsID);
         }
     }
+
     private void initTimerPicker() {
         //        Calendar calendar = Calendar.getInstance();
         //        String beginTime = calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
@@ -130,6 +132,7 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         // 允许滚动动画
         mTimerPicker.setCanShowAnim(true);
     }
+
     private void initDateTime() {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -210,9 +213,14 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
                 mTimerPicker.show(tvTime.getText().toString());
                 break;
             case R.id.bt_schedule_save:
+                if (!TextUtils.isEmpty(etContent.getText())){
+                    insert = new Insert(timeYMD, timeHM, etContent.getText().toString().trim(), "0", clickItem, "0", 0, "0", 0, timeYMD, timeYMD, SharedPreferenceUtils.getUserId(this), 0);
+                    insertPresenter.insert(insert);
+                }else {
+                    SpannableString content = new SpannableString("内容不能为空");//这里输入自己想要的提示文字
+                    etContent.setHint(content);
+                }
 
-                insert = new Insert(timeYMD, timeHM, etContent.getText().toString().trim(), "0", clickItem, "0", 0, "0", 0, timeYMD, timeYMD, SharedPreferenceUtils.getUserId(this), 0);
-                insertPresenter.insert(insert);
                 break;
             default:
                 break;
@@ -241,8 +249,6 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         Log.i(TAG, timeYMD + " " + timeHM);
         ;
     }
-
-
 
 
     @Override

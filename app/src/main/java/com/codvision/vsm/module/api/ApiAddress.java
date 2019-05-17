@@ -7,8 +7,8 @@ package com.codvision.vsm.module.api;
 public class ApiAddress {
 
     //生成环境
-    public final static String API = "http://192.168.2.102:8767/";
-
+//    public final static String API = "http://192.168.2.102:8767/";
+    public final static String API = "http://192.168.22.232:8767/";
 
     /**************************************个人中心************************************************/
 
@@ -20,6 +20,8 @@ public class ApiAddress {
     public final static String SUBMIT = "v1/vsm/user/info/submit";
     //插入日程
     public final static String INSERT = "v1/vsm/schedule/insert";
-    //插入日程
+    //获取日程
     public final static String SELECT = "v1/vsm/schedule/select";
+    //删除日程
+    public final static String DELETE = "v1/vsm/schedule/delete";
 }

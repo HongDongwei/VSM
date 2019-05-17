@@ -17,7 +17,7 @@ public class Schedule implements Serializable {
 
     private String thing;
 
-    private String note;
+    private String cycle;
 
     private int degree;
 
@@ -35,12 +35,12 @@ public class Schedule implements Serializable {
 
     private int s_userid;
 
-    public Schedule(int id, Date time, String place, String thing, String note, int degree, String label, int isremind, String type, int state, Date startdate, Date enddate, int s_userid) {
+    public Schedule(int id, Date time, String place, String thing, String cycle, int degree, String label, int isremind, String type, int state, Date startdate, Date enddate, int s_userid) {
         this.id = id;
         this.time = time;
         this.place = place;
         this.thing = thing;
-        this.note = note;
+        this.cycle = cycle;
         this.degree = degree;
         this.label = label;
         this.isremind = isremind;
@@ -84,12 +84,12 @@ public class Schedule implements Serializable {
         this.thing = thing;
     }
 
-    public String getNote() {
-        return note;
+    public String getCycle() {
+        return cycle;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setCycle(String cycle) {
+        this.cycle = cycle;
     }
 
     public int getDegree() {

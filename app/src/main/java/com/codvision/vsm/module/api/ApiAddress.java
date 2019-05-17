@@ -8,7 +8,7 @@ public class ApiAddress {
 
     //生成环境
 //    public final static String API = "http://192.168.2.102:8767/";
-    public final static String API = "http://192.168.22.232:8767/";
+    public final static String API = "http://192.168.2.103:8767/";
 
     /**************************************个人中心************************************************/
 

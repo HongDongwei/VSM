@@ -90,7 +90,7 @@
                 android:id="@+id/tv_plan_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -114,7 +114,7 @@
                 android:id="@+id/tv_plan_uncomplete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
+                android:text="0"
                 android:textColor="@color/plan_incomplete"
                 android:textSize="20sp"
                 android:textStyle="bold" />

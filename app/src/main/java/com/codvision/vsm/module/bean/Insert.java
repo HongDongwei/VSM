@@ -1,7 +1,5 @@
 package com.codvision.vsm.module.bean;
 
-import java.util.Date;
-
 /**
  * Created by sxy on 2019/5/11 15:56
  * todo
@@ -15,7 +13,7 @@ public class Insert {
 
     private String thing;
 
-    private String note;
+    private String cycle;
 
     private int degree;
 
@@ -35,12 +33,12 @@ public class Insert {
 
     private int status;
 
-    public Insert(String time, String place, String thing, String note, int degree, String label, int isremind, String type, int state, String startdate, String enddate, int s_userid, int status) {
+    public Insert(String time, String place, String thing, String cycle, int degree, String label, int isremind, String type, int state, String startdate, String enddate, int s_userid, int status) {
         this.status = status;
         this.time = time;
         this.place = place;
         this.thing = thing;
-        this.note = note;
+        this.cycle = cycle;
         this.degree = degree;
         this.label = label;
         this.isremind = isremind;
@@ -56,7 +54,7 @@ public class Insert {
         //this.time = schedule.getTime();
         this.place = schedule.getPlace();
         this.thing = schedule.getThing();
-        this.note = schedule.getNote();
+        this.cycle = schedule.getCycle();
         this.degree = schedule.getDegree();
         this.label = schedule.getLabel();
         this.isremind = schedule.getIsremind();
@@ -99,12 +97,12 @@ public class Insert {
         this.thing = thing;
     }
 
-    public String getNote() {
-        return note;
+    public String getCycle() {
+        return cycle;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setCycle(String cycle) {
+        this.cycle = cycle;
     }
 
     public int getDegree() {

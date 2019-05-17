@@ -528,10 +528,10 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
         scheduleArrayList.clear();
         for (int i = 0; i < arrayList.size(); i++) {
             Schedule schedule = arrayList.get(i);
-            if (schedule.getNote().equals("0")) {
+            if (schedule.getCycle().equals("0")) {
                 scheduleArrayList.add(schedule);
             } else {
-                if (isDay(Integer.parseInt(schedule.getNote()), df.format(schedule.getStartdate()) + "", df.format(schedule.getEnddate()) + "", time)) {
+                if (isDay(Integer.parseInt(schedule.getCycle()), df.format(schedule.getStartdate()) + "", df.format(schedule.getEnddate()) + "", time)) {
                     Log.i(TAG, "getScheduleSuccess: true");
                     scheduleArrayList.add(schedule);
                 }

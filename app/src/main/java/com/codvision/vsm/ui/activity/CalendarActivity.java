@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codvision.vsm.R;
+import com.codvision.vsm.presenter.contract.ConclusionInsertContract;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -15,7 +16,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CalendarActivity extends AppCompatActivity {
+public class CalendarActivity extends AppCompatActivity implements ConclusionInsertContract.View {
     private MaterialCalendarView materialCalendarView;//布局内的控件
     private CalendarDay currentDate;//自定义的日期对象
 
@@ -72,4 +73,13 @@ public class CalendarActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void insertConclusionSuccess() {
+
+    }
+
+    @Override
+    public void insertConclusionFail(String code, String message) {
+
+    }
 }

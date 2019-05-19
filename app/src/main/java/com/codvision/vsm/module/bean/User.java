@@ -1,13 +1,8 @@
 package com.codvision.vsm.module.bean;
 
 import android.content.SharedPreferences;
-import android.graphics.Region;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by sxy on 2019/5/8 13:48
@@ -42,14 +37,14 @@ public class User implements Serializable {
         editor.putBoolean("state", state);
     }
 
-    public User(Login login, String pwd, boolean state) {
-        this.id = login.getId();
-        this.username = login.getUsername();
+    public User(UserLogin userLogin, String pwd, boolean state) {
+        this.id = userLogin.getId();
+        this.username = userLogin.getUsername();
         this.password = pwd;
-        this.email = login.getEmail();
-        this.image = login.getImage();
-        this.gender = login.getGender();
-        this.intro = login.getIntro();
+        this.email = userLogin.getEmail();
+        this.image = userLogin.getImage();
+        this.gender = userLogin.getGender();
+        this.intro = userLogin.getIntro();
         this.state = state;
     }
 

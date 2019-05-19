@@ -79,7 +79,7 @@ public class App extends Application {
      * @return KProgressHUD
      */
     public static void hide() {
-        if (kProgressHUD.isShowing()){
+        if (kProgressHUD.isShowing()) {
             kProgressHUD.dismiss();
         }
     }

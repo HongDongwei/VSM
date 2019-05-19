@@ -13,12 +13,12 @@ import android.widget.TextView;
 import com.codvision.vsm.App;
 import com.codvision.vsm.R;
 import com.codvision.vsm.module.bean.User;
-import com.codvision.vsm.presenter.RegisterPresenter;
-import com.codvision.vsm.presenter.contract.RegisterContract;
+import com.codvision.vsm.presenter.UserRegisterPresenter;
+import com.codvision.vsm.presenter.contract.UserRegisterContract;
 
-public class RegisterActivity extends AppCompatActivity implements RegisterContract.View, View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements UserRegisterContract.View, View.OnClickListener {
     public static final String TAG = "RegisterActivity";
-    private RegisterPresenter presenter;
+    private UserRegisterPresenter presenter;
     private TextInputLayout inputUser;
     private TextInputLayout inputPassword;
     private TextView cvRegister;
@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
         etUser = inputUser.getEditText();
         etPwd = inputPassword.getEditText();
-        presenter = new RegisterPresenter(this, this);
+        presenter = new UserRegisterPresenter(this, this);
     }
 
     private void initEvent() {

@@ -16,6 +16,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.codvision.vsm.R;
+import com.codvision.vsm.base.Constant;
+import com.codvision.vsm.module.bean.ScheduleSubmit;
+import com.codvision.vsm.presenter.ScheduleSubmitPresenter;
+import com.codvision.vsm.presenter.contract.ScheduleSubmitContract;
 import com.codvision.vsm.serice.ScheduleConfirmService;
 import com.codvision.vsm.ui.fragment.PlanFragment;
 import com.codvision.vsm.ui.fragment.TodayFragment;
@@ -26,11 +30,9 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 
-import java.util.Calendar;
-
 import static com.codvision.vsm.utils.DayUtils.getTime;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ScheduleSubmitContract.View {
     /**
      * TAG
      */
@@ -40,14 +42,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvPlan;
     private TextView tvUser;
 
-
+    private ScheduleSubmitPresenter presenter;
     private PlanFragment planFragment;
     private TodayFragment todayFragment;
     private UserFragment userFragment;
 
     private FragmentManager fragmentManager;
     private boolean mIsBound;
-    private Calendar a = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         todayFragment = new TodayFragment();
         userFragment = new UserFragment();
         fragmentManager = getFragmentManager();
-        a.set(2019, 05, 3, 16, 47, 0);
+        presenter = new ScheduleSubmitPresenter(this, this);
         doBindService();
     }
 
@@ -166,6 +167,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void submitScheduleSuccess() {
+
+    }
+
+    @Override
+    public void submitScheduleFail(String code, String message) {
+
+    }
+
     class MySynthesizerListener implements SynthesizerListener {
 
         @Override
@@ -218,9 +229,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             scheduleConfirmService.setCallback(new ScheduleConfirmService.Callback() {
 
                 @Override
-                public void onDataChange(String data) {
+                public void onDataChange(String data, int id) {
+                    for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
+                        if (Constant.scheduleArrayList.get(i).getId() == id) {
+                            Constant.scheduleArrayList.get(i).setState(1);
+                        }
+                    }
                     Message msg = new Message();
                     msg.obj = data;
+                    msg.what = id;
                     handler.sendMessage(msg);
                 }
             });
@@ -253,9 +270,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-//            if (msg.obj.toString().equals("1")) {
-//                speekText("您有一个" + getTime(a) + "的任务还没完成");
-//            }
+            for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
+                if (Constant.scheduleArrayList.get(i).getId() == msg.what) {
+                    presenter.submitSchedule(new ScheduleSubmit(Constant.scheduleArrayList.get(i).getId(), 1));
+                }
+            }
+            speekText("您有一个" + msg.obj.toString() + "的任务还没完成，请尽快完成");
             Log.i(TAG, "handleMessage: " + msg.obj.toString());
         }
     };

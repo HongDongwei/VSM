@@ -11,9 +11,9 @@ public class Conclusion implements Serializable {
 
     private int c_userid;
 
-    private int content;
+    private String content;
 
-    private int time;
+    private String time;
 
     public int getId() {
         return id;
@@ -31,19 +31,19 @@ public class Conclusion implements Serializable {
         this.c_userid = c_userid;
     }
 
-    public int getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(int content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

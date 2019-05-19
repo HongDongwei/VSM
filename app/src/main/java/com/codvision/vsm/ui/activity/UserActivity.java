@@ -22,15 +22,13 @@ import com.bumptech.glide.Glide;
 import com.codvision.vsm.App;
 import com.codvision.vsm.R;
 import com.codvision.vsm.module.bean.User;
-import com.codvision.vsm.presenter.InfoSubmitPresenter;
-import com.codvision.vsm.presenter.LoginPresenter;
-import com.codvision.vsm.presenter.contract.InfoSubmitContract;
-import com.codvision.vsm.presenter.contract.LoginContract;
+import com.codvision.vsm.presenter.UserSubmitPresenter;
+import com.codvision.vsm.presenter.contract.UserSubmitContract;
 import com.codvision.vsm.utils.SharedPreferenceUtils;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class UserActivity extends AppCompatActivity implements View.OnClickListener, InfoSubmitContract.View {
+public class UserActivity extends AppCompatActivity implements View.OnClickListener, UserSubmitContract.View {
 
     public static final String TAG = "UserFragment";
     private static final int TYPE_EMAIL = 1;
@@ -50,7 +48,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
     private User user;
     private int checkdItem;
 
-    private InfoSubmitPresenter presenter;
+    private UserSubmitPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,7 @@ public class UserActivity extends AppCompatActivity implements View.OnClickListe
         tvSave = findViewById(R.id.tv_save);
         ibBack = findViewById(R.id.ib_user_back);
         user = SharedPreferenceUtils.getUser(this);
-        presenter = new InfoSubmitPresenter(this, this);
+        presenter = new UserSubmitPresenter(this, this);
     }
 
 

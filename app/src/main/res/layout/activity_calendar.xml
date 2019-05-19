@@ -14,11 +14,11 @@
 
         <ImageView
             android:id="@+id/iv_calendar_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/calendar" />
+            android:background="@drawable/white_left" />
 
         <TextView
             android:id="@+id/tv_selected_date"
@@ -26,33 +26,68 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginStart="15dp"
-            android:text="2019年5月"
+            android:text="日总结"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
-        <ImageView
-            android:id="@+id/iv_plan_add"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/plan_add" />
     </RelativeLayout>
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:background="#fff"
         app:mcv_selectionColor="#F00"
-        app:mcv_showOtherDates="all"
+        app:mcv_showOtherDates="all" />
 
-        />
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="getTime"
-        android:text="获取时间" />
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="4"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:hint="请输入您今天干的事情吧！"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/themeColor"
+                android:text="返回今天"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/themeColor"
+                android:text="保存"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

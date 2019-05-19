@@ -23,13 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codvision.vsm.R;
-import com.codvision.vsm.module.bean.DeleteSchedule;
-import com.codvision.vsm.module.bean.GetSchedule;
+import com.codvision.vsm.base.Constant;
+import com.codvision.vsm.module.bean.FuturePlan;
+import com.codvision.vsm.module.bean.FuturePlanGet;
+import com.codvision.vsm.module.bean.ScheduleDelete;
+import com.codvision.vsm.module.bean.ScheduleGet;
 import com.codvision.vsm.module.bean.Schedule;
-import com.codvision.vsm.presenter.DeleteSchedulePresenter;
-import com.codvision.vsm.presenter.GetSchedulePresenter;
-import com.codvision.vsm.presenter.contract.DeleteScheduleContract;
-import com.codvision.vsm.presenter.contract.GetScheduleContract;
+import com.codvision.vsm.presenter.FuturePlanGetPresenter;
+import com.codvision.vsm.presenter.ScheduleDeletePresenter;
+import com.codvision.vsm.presenter.ScheduleGetPresenter;
+import com.codvision.vsm.presenter.contract.FuturePlanGetContract;
+import com.codvision.vsm.presenter.contract.ScheduleDeleteContract;
+import com.codvision.vsm.presenter.contract.ScheduleGetContract;
 import com.codvision.vsm.ui.activity.AddScheduleActivity;
 import com.codvision.vsm.ui.activity.CalendarActivity;
 import com.codvision.vsm.ui.adapter.TodayScheduleAdapter;
@@ -53,6 +58,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+import com.superluo.textbannerlibrary.TextBannerView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +73,7 @@ import java.util.List;
 
 import static com.codvision.vsm.utils.DayUtils.isDay;
 
-public class TodayFragment extends Fragment implements View.OnClickListener, GetScheduleContract.View, DeleteScheduleContract.View {
+public class TodayFragment extends Fragment implements View.OnClickListener, ScheduleGetContract.View, ScheduleDeleteContract.View, FuturePlanGetContract.View {
 
     /**
      * TAG
@@ -95,13 +101,20 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
     private List<Schedule> scheduleArrayList = new ArrayList<Schedule>();
     private TodayScheduleAdapter todayScheduleAdapter;
 
-    private GetSchedulePresenter getSchedulePresenter;
-    private DeleteSchedulePresenter deleteSchedulePresenter;
-    private GetSchedule getSchedule;
+    private ScheduleGetPresenter scheduleGetPresenter;
+    private ScheduleDeletePresenter scheduleDeletePresenter;
+    private FuturePlanGetPresenter futurePlanGetPresenter;
+    private ScheduleGet scheduleGet;
     private int year;
     private int month;
     private int day;
     private String time;
+
+    //初始化TextBannerView
+    private TextBannerView tvBanner;
+    //设置数据
+    List<String> list = new ArrayList<>();
+    private Boolean isToday;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_today, container, false);
@@ -130,8 +143,11 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
         tvBack = (TextView) view.findViewById(R.id.tv_back);
         todayScheduleAdapter = new TodayScheduleAdapter(getActivity(), R.layout.item_schedule, scheduleArrayList);
         lvSchedule = view.findViewById(R.id.lv_schedule);
-        getSchedulePresenter = new GetSchedulePresenter(this, getActivity());
-        deleteSchedulePresenter = new DeleteSchedulePresenter(this, getActivity());
+        tvBanner = (TextBannerView) view.findViewById(R.id.tv_banner);
+        scheduleGetPresenter = new ScheduleGetPresenter(this, getActivity());
+        scheduleDeletePresenter = new ScheduleDeletePresenter(this, getActivity());
+        futurePlanGetPresenter = new FuturePlanGetPresenter(this, getActivity());
+        futurePlanGetPresenter.getFuturePlan(new FuturePlanGet(SharedPreferenceUtils.getUserId(getActivity())));
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendarView);
         findCommand = new FindCommand(getActivity());
         todayDate = Calendar.getInstance();
@@ -173,7 +189,7 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //...To-do
-                        deleteSchedulePresenter.deleteSchedule(new DeleteSchedule(scheduleArrayList.get(position).getId()));
+                        scheduleDeletePresenter.deleteSchedule(new ScheduleDelete(scheduleArrayList.get(position).getId()));
                     }
                 });
         normalDialog.setNegativeButton("关闭",
@@ -208,6 +224,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
     }
 
     private void initToady(Boolean today, CalendarDay currentDate) {
+
+        scheduleArrayList.clear();
+        isToday = today;
         year = currentDate.getYear();
         month = currentDate.getMonth() + 1; //月份跟系统一样是从0开始的，实际获取时要加1
         day = currentDate.getDay();
@@ -235,9 +254,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
             tvWeek.setText("周" + DayUtils.getWeek(year, month, day));
         }
         materialCalendarView.state().edit().commit();
-        getSchedule = new GetSchedule(time, SharedPreferenceUtils.getUserId(getActivity()));
-        Log.i(TAG, "initToady: getSchedule" + getSchedule.getTime());
-        getSchedulePresenter.getSchedule(getSchedule);
+        scheduleGet = new ScheduleGet(time, SharedPreferenceUtils.getUserId(getActivity()));
+        Log.i(TAG, "initToady: scheduleGet" + scheduleGet.getTime());
+        scheduleGetPresenter.getSchedule(scheduleGet);
     }
 
     private void initData() {
@@ -295,7 +314,6 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
         mTts.startSpeaking(s, new MySynthesizerListener());
 
     }
-
 
     class MySynthesizerListener implements SynthesizerListener {
 
@@ -523,9 +541,9 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
 
     @Override
     public void getScheduleSuccess(ArrayList<Schedule> arrayList) {
+        scheduleArrayList.clear();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Log.i(TAG, "getScheduleSuccess: 成功了" + arrayList.size() + " day:" + df.format(arrayList.get(0).getStartdate()));
-        scheduleArrayList.clear();
         for (int i = 0; i < arrayList.size(); i++) {
             Schedule schedule = arrayList.get(i);
             if (schedule.getCycle().equals("0")) {
@@ -538,6 +556,20 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
             }
 
         }
+        if (isToday) {
+            boolean repeat;
+            for (int i = 0; i < scheduleArrayList.size(); i++) {
+                repeat = false;
+                for (int j = 0; j < Constant.scheduleArrayList.size(); j++) {
+                    if (scheduleArrayList.get(i).getId() == Constant.scheduleArrayList.get(j).getId()) {
+                        repeat = true;
+                    }
+                }
+                if (!repeat) {
+                    Constant.scheduleArrayList.add(scheduleArrayList.get(i));
+                }
+            }
+        }
         todayScheduleAdapter.notifyDataSetChanged();
     }
 
@@ -547,14 +579,30 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Get
     }
 
     @Override
-    public void deleteScheduleSuccess(ArrayList<Schedule> arrayList) {
-        getSchedule = new GetSchedule(time, SharedPreferenceUtils.getUserId(getActivity()));
-        Log.i(TAG, "initToady: getSchedule" + getSchedule.getTime());
-        getSchedulePresenter.getSchedule(getSchedule);
+    public void deleteScheduleSuccess() {
+        scheduleGet = new ScheduleGet(time, SharedPreferenceUtils.getUserId(getActivity()));
+        Log.i(TAG, "initToady: scheduleGet" + scheduleGet.getTime());
+        scheduleGetPresenter.getSchedule(scheduleGet);
     }
 
     @Override
     public void deleteScheduleFail(String code, String message) {
         Log.i(TAG, "deleteScheduleFail: message:" + message);
     }
+
+    @Override
+    public void getFuturePlanSuccess(ArrayList<FuturePlan> arrayList) {
+        list.clear();
+        for (int i = 0; i < arrayList.size(); i++) {
+            list.add(arrayList.get(i).getFcontent());
+        }
+        tvBanner.setDatas(list);
+    }
+
+    @Override
+    public void getFuturePlanFail(String code, String message) {
+
+    }
+
+
 }

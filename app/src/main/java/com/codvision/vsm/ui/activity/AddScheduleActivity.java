@@ -18,20 +18,18 @@ import android.widget.TimePicker;
 
 import com.codvision.vsm.App;
 import com.codvision.vsm.R;
-import com.codvision.vsm.module.bean.Insert;
-import com.codvision.vsm.presenter.InsertPresenter;
-import com.codvision.vsm.presenter.contract.InsertContract;
+import com.codvision.vsm.module.bean.UserInsert;
+import com.codvision.vsm.presenter.ScheduleInsertPresenter;
+import com.codvision.vsm.presenter.contract.ScheduleInsertContract;
 import com.codvision.vsm.utils.FindCommand;
 import com.codvision.vsm.utils.SharedPreferenceUtils;
 import com.codvision.vsm.utils.datepicker.CustomDatePicker;
 import com.codvision.vsm.utils.datepicker.DateFormatUtils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddScheduleActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener, InsertContract.View {
+public class AddScheduleActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener, ScheduleInsertContract.View {
     /**
      * TAG
      */
@@ -58,10 +56,10 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
     private Boolean setFindCommand;
     private CustomDatePicker mTimerPicker;
 
-    private InsertPresenter insertPresenter;
+    private ScheduleInsertPresenter scheduleInsertPresenter;
 
     private int clickItem;
-    private Insert insert;
+    private UserInsert userInsert;
     private String timeYMD;
     private String timeHM;
     private Date dateYMD;
@@ -87,7 +85,7 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
         findCommand = new FindCommand(this);
         date = new StringBuffer();
         time = new StringBuffer();
-        insertPresenter = new InsertPresenter(this, this);
+        scheduleInsertPresenter = new ScheduleInsertPresenter(this, this);
 
         //页面加载
         initTimerPicker();
@@ -214,8 +212,8 @@ public class AddScheduleActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.bt_schedule_save:
                 if (!TextUtils.isEmpty(etContent.getText())){
-                    insert = new Insert(timeYMD, timeHM, etContent.getText().toString().trim(), "0", clickItem, "0", 0, "0", 0, timeYMD, timeYMD, SharedPreferenceUtils.getUserId(this), 0);
-                    insertPresenter.insert(insert);
+                    userInsert = new UserInsert(timeYMD, timeHM, etContent.getText().toString().trim(), "0", clickItem, "0", 0, "0", 0, timeYMD, timeYMD, SharedPreferenceUtils.getUserId(this), 0);
+                    scheduleInsertPresenter.insert(userInsert);
                 }else {
                     SpannableString content = new SpannableString("内容不能为空");//这里输入自己想要的提示文字
                     etContent.setHint(content);

@@ -6,21 +6,19 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codvision.vsm.App;
 import com.codvision.vsm.R;
-import com.codvision.vsm.module.bean.Login;
-import com.codvision.vsm.presenter.LoginPresenter;
-import com.codvision.vsm.presenter.contract.LoginContract;
+import com.codvision.vsm.presenter.UserLoginPresenter;
+import com.codvision.vsm.presenter.contract.UserLoginContract;
 import com.codvision.vsm.ui.MainActivity;
 import com.codvision.vsm.utils.SharedPreferenceUtils;
 
-public class LeadActivity extends AppCompatActivity implements LoginContract.View {
+public class LeadActivity extends AppCompatActivity implements UserLoginContract.View {
     public static final String TAG = "LeadActivity";
-    private LoginPresenter presenter;
+    private UserLoginPresenter presenter;
     private Handler handler = new Handler();
     int time = 3;
     private Context context;
@@ -44,7 +42,7 @@ public class LeadActivity extends AppCompatActivity implements LoginContract.Vie
         tvTime = findViewById(R.id.tv_lead_time);
         tvTime.setText(String.valueOf(time));
         handler = new Handler();
-        presenter = new LoginPresenter(this, this);
+        presenter = new UserLoginPresenter(this, this);
 
     }
 

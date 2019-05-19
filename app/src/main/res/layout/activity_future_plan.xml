@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.FuturePlanActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_future_plan"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themeColor">
+
+        <ImageButton
+            android:id="@+id/ib_future_plan_finish"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/white_left"
+            android:contentDescription="@string/explain_back" />
+
+        <TextView
+            android:id="@+id/tv_future_plan_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="未来计划"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_future_plan_add"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/plan_add" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_future_plan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_future_plan"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="10dp"
+        android:divider="#00000000"
+        android:dividerHeight="10dp"
+        android:scrollbars="none"
+        tools:listitem="@layout/item_futureplan" />
+
+</RelativeLayout>

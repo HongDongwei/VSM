@@ -103,4 +103,17 @@ public class DayUtils {
         return time.charAt(11) + "" + time.charAt(12) + time.charAt(13) + time.charAt(14) + time.charAt(15);
 
     }
+
+    public static boolean compareTime(Calendar calendar, String time) {
+        int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int nowMinute = calendar.get(Calendar.MINUTE);
+        String strHour = time.charAt(0) + "" + time.charAt(1);
+        String strMinute = time.charAt(3) + "" + time.charAt(4);
+        int hour = Integer.parseInt(strHour);
+        int minute = Integer.parseInt(strMinute);
+        if (nowHour > hour || (nowHour == hour && nowMinute >= minute)) {
+            return true;
+        }
+        return false;
+    }
 }

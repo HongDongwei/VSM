@@ -6,6 +6,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.codvision.vsm.base.Constant;
+import com.codvision.vsm.utils.DayUtils;
+
 import org.apache.mina.core.buffer.IoBuffer;
 
 import java.util.Calendar;
@@ -22,14 +25,11 @@ public class ScheduleConfirmService extends Service {
     private TimerTask task;
     private Calendar calendar;
     private SocketBinder sockerBinder = new SocketBinder();
-    private Calendar a = Calendar.getInstance();
     private Callback callback;
 
     @Override
     public IBinder onBind(Intent intent) {
         startConfirm();
-        calendar = Calendar.getInstance();
-        a.set(2019, 05, 3, 16, 47, 0);
         return sockerBinder;
     }
 
@@ -46,7 +46,7 @@ public class ScheduleConfirmService extends Service {
     }
 
     public static interface Callback {
-        void onDataChange(String data);
+        void onDataChange(String data, int id);
     }
 
     //定时发送数据
@@ -63,19 +63,23 @@ public class ScheduleConfirmService extends Service {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                if (calendar.get(Calendar.HOUR) > a.get(Calendar.HOUR) || (calendar.get(Calendar.HOUR) == a.get(Calendar.HOUR) && calendar.get(Calendar.MINUTE) > a.get(Calendar.MINUTE))) {
-                                    if (callback != null) {
-                                        callback.onDataChange("1");
+                                calendar = Calendar.getInstance();
+                                for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
+                                    if (DayUtils.compareTime(calendar, Constant.scheduleArrayList.get(i).getPlace()) && (Constant.scheduleArrayList.get(i).getState() == 0)) {
+                                        if (callback != null) {
+                                            callback.onDataChange(Constant.scheduleArrayList.get(i).getThing(), Constant.scheduleArrayList.get(i).getId());
+                                        }
+                                        break;
                                     }
-                                    try {
-                                        Thread.sleep(1000);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
+                                }
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
                                 }
                             }
                         }).start();
-                     //   Log.i(TAG, "run: " + calendar.toString());
+                        //   Log.i(TAG, "run: " + calendar.toString());
 
                     } catch (
                             Exception e) {

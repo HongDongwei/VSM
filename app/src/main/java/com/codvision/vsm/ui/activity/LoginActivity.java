@@ -4,26 +4,22 @@ import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codvision.vsm.App;
 import com.codvision.vsm.R;
-import com.codvision.vsm.presenter.LoginPresenter;
-import com.codvision.vsm.presenter.contract.LoginContract;
+import com.codvision.vsm.presenter.UserLoginPresenter;
+import com.codvision.vsm.presenter.contract.UserLoginContract;
 import com.codvision.vsm.ui.MainActivity;
-import com.codvision.vsm.utils.SharedPreferenceUtils;
 
-public class LoginActivity extends AppCompatActivity implements LoginContract.View, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements UserLoginContract.View, View.OnClickListener {
     public static final String TAG = "LoginActivity";
-    private LoginPresenter presenter;
+    private UserLoginPresenter presenter;
     private TextInputLayout inputUser;
     private TextInputLayout inputPassword;
     private TextView tvRegister;
@@ -48,7 +44,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         ibfinish = findViewById(R.id.ib_login_finish);
         etUser = inputUser.getEditText();
         etPwd = inputPassword.getEditText();
-        presenter = new LoginPresenter(this, this);
+        presenter = new UserLoginPresenter(this, this);
     }
 
     private void initEvent() {

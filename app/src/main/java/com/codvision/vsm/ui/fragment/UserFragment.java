@@ -3,11 +3,9 @@ package com.codvision.vsm.ui.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,11 +13,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codvision.vsm.R;
 import com.codvision.vsm.module.bean.User;
+import com.codvision.vsm.ui.activity.FuturePlanActivity;
 import com.codvision.vsm.ui.activity.SettingActivity;
 import com.codvision.vsm.ui.activity.UserActivity;
 import com.codvision.vsm.utils.SharedPreferenceUtils;
-
-import java.util.PropertyResourceBundle;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -36,6 +33,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     private TextView tvName;
     private TextView tvSign;
     private User user;
+    private RelativeLayout rlFuturePlan;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_user, container, false);
@@ -51,11 +49,13 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         tvName = view.findViewById(R.id.tv_user_name);
         tvSign = view.findViewById(R.id.tv_user_sign);
         ivHead = view.findViewById(R.id.iv_user_head);
+        rlFuturePlan = view.findViewById(R.id.rl_to_futureplan);
     }
 
     private void initEvent() {
         rlUserSet.setOnClickListener(this);
         tvSet.setOnClickListener(this);
+        rlFuturePlan.setOnClickListener(this);
     }
 
     @Override
@@ -88,6 +88,10 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tv_set:
                 intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.rl_to_futureplan:
+                intent = new Intent(getActivity(), FuturePlanActivity.class);
                 startActivity(intent);
                 break;
             default:

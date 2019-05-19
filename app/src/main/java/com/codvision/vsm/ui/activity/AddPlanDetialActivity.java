@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 import com.codvision.vsm.App;
 import com.codvision.vsm.R;
-import com.codvision.vsm.module.bean.Insert;
-import com.codvision.vsm.presenter.InsertPresenter;
-import com.codvision.vsm.presenter.contract.InsertContract;
+import com.codvision.vsm.module.bean.UserInsert;
+import com.codvision.vsm.presenter.ScheduleInsertPresenter;
+import com.codvision.vsm.presenter.contract.ScheduleInsertContract;
 import com.codvision.vsm.utils.SharedPreferenceUtils;
 import com.codvision.vsm.utils.datepicker.CustomDatePicker;
 import com.codvision.vsm.utils.datepicker.DateFormatUtils;
@@ -25,7 +25,7 @@ import java.util.Calendar;
 import static com.codvision.vsm.utils.DayUtils.getDay;
 import static com.codvision.vsm.utils.DayUtils.getTime;
 
-public class AddPlanDetialActivity extends AppCompatActivity implements View.OnClickListener, InsertContract.View {
+public class AddPlanDetialActivity extends AppCompatActivity implements View.OnClickListener, ScheduleInsertContract.View {
 
     /**
      * TAG
@@ -51,10 +51,10 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
     private EditText etCycle;
     private CustomDatePicker mTimerStartPicker;
     private CustomDatePicker mTimerEndPicker;
-    private InsertPresenter insertPresenter;
+    private ScheduleInsertPresenter scheduleInsertPresenter;
 
     private Button btSave;
-    private Insert insert;
+    private UserInsert userInsert;
     private String startDay;
     private String endDay;
 
@@ -79,7 +79,7 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
         etTitle = findViewById(R.id.et_plan_title);
         etCycle = findViewById(R.id.et_plan_cycle);
         btSave = findViewById(R.id.bt_plan_save);
-        insertPresenter = new InsertPresenter(this, this);
+        scheduleInsertPresenter = new ScheduleInsertPresenter(this, this);
         initTimerStartPicker();
         initTimerEndPicker();
         initDateTime();
@@ -117,8 +117,8 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
                     if (TextUtils.isEmpty(etCycle.getText())) {
                         etCycle.setText("周期不能为空");
                     } else {
-                        insert = new Insert(getDay(startDay), getTime(startDay), etTitle.getText().toString().trim(), etCycle.getText().toString().trim(), clickItem, "0", 0, "0", 0, getDay(startDay), getDay(endDay), SharedPreferenceUtils.getUserId(this), 1);
-                        insertPresenter.insert(insert);
+                        userInsert = new UserInsert(getDay(startDay), getTime(startDay), etTitle.getText().toString().trim(), etCycle.getText().toString().trim(), clickItem, "0", 0, "0", 0, getDay(startDay), getDay(endDay), SharedPreferenceUtils.getUserId(this), 1);
+                        scheduleInsertPresenter.insert(userInsert);
                     }
                 }
                 break;

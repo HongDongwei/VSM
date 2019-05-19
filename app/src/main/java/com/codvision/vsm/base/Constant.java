@@ -2,6 +2,11 @@ package com.codvision.vsm.base;
 
 import android.util.Log;
 
+import com.codvision.vsm.module.bean.Schedule;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sxy on 2019/5/8 13:48
  * todo
@@ -9,6 +14,7 @@ import android.util.Log;
 public class Constant {
     public static String logger = "logger";
     private static boolean isPrintLog = true; //是否打开日志打印
+    public static List<Schedule> scheduleArrayList = new ArrayList<Schedule>();
 
     //日志打印
     public static void printLogger(String logTxt) {

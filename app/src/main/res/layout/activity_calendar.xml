@@ -46,6 +46,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/et_conclusion"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
@@ -68,6 +69,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/bt_back"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -79,6 +81,7 @@
                 android:textSize="17sp" />
 
             <Button
+                android:id="@+id/bt_save"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"

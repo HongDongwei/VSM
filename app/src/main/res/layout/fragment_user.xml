@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,12 +64,6 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_small" />
 
-            <ImageView
-                android:id="@+id/tv_set"
-                android:layout_width="@dimen/size_set"
-                android:layout_height="@dimen/size_set"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/setting_white" />
         </RelativeLayout>
 
         <LinearLayout
@@ -229,6 +225,7 @@
                 android:background="@color/grey" />
 
             <RelativeLayout
+                android:id="@+id/rl_to_conclusion"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
@@ -259,44 +256,22 @@
                     android:background="@drawable/arrow_right" />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="50dp"
-                android:background="@color/grey" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-                <ImageView
-                    android:id="@+id/iv_user_funtion3"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/feetback" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toEndOf="@+id/iv_user_funtion3"
-                    android:gravity="center"
-                    android:text="意见反馈"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/arrow_right" />
-            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/tv_logout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@+id/rl_login_input"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/login_click"
+        android:clickable="false"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="退出登录"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </RelativeLayout>

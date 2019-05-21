@@ -57,6 +57,7 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
     private UserInsert userInsert;
     private String startDay;
     private String endDay;
+    private String planType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,7 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
 
 
         Intent intent = getIntent();
-        String planType = intent.getStringExtra("plan_type");
+        planType = intent.getStringExtra("plan_type");
         setType(planType);
         setClick(tvAlert2, 2);
     }
@@ -117,7 +118,7 @@ public class AddPlanDetialActivity extends AppCompatActivity implements View.OnC
                     if (TextUtils.isEmpty(etCycle.getText())) {
                         etCycle.setText("周期不能为空");
                     } else {
-                        userInsert = new UserInsert(getDay(startDay), getTime(startDay), etTitle.getText().toString().trim(), etCycle.getText().toString().trim(), clickItem, "0", 0, "0", 0, getDay(startDay), getDay(endDay), SharedPreferenceUtils.getUserId(this), 1);
+                        userInsert = new UserInsert(getDay(startDay), getTime(startDay), etTitle.getText().toString().trim(), etCycle.getText().toString().trim(), clickItem, "0", 0, planType, 0, getDay(startDay), getDay(endDay), SharedPreferenceUtils.getUserId(this), 1);
                         scheduleInsertPresenter.insert(userInsert);
                     }
                 }

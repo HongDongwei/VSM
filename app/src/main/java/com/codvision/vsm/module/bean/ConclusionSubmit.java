@@ -12,6 +12,11 @@ public class ConclusionSubmit implements Serializable {
 
     private String content;
 
+    public ConclusionSubmit(int id,String content) {
+        this.id = id;
+        this.content=content;
+    }
+
     public int getId() {
         return id;
     }

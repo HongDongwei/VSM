@@ -8,7 +8,7 @@ import com.codvision.vsm.module.bean.FuturePlanDelete;
  * Created by sxy on 2019/5/19 2:08
  * todo
  */
-public class ConclusionDeleteContract {
+public interface ConclusionDeleteContract {
     public interface Presenter {
         //提交
         void deleteConclusion(ConclusionDelete conclusionDelete);

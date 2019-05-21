@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by sxy on 2019/5/19 2:08
  * todo
  */
-public class FuturePlanGetContract {
+public interface FuturePlanGetContract {
     public interface Presenter {
         //提交
         void getFuturePlan(FuturePlanGet futureplanGet);

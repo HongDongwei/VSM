@@ -1,16 +1,19 @@
 package com.codvision.vsm.ui.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codvision.vsm.R;
 import com.codvision.vsm.module.bean.Schedule;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -20,6 +23,7 @@ import java.util.List;
 public class ScheduleAdapter extends ArrayAdapter<Schedule> {
     // 子项布局的id
     private int resourceId;
+    private Calendar calendar;
 
     // 构造函数
     public ScheduleAdapter(Context context, int textViewResourceId, List<Schedule> objects) {
@@ -42,12 +46,17 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
             viewHolder.planTime = (TextView) view.findViewById(R.id.tv_plan_time);
             viewHolder.planWeight = (TextView) view.findViewById(R.id.tv_plan_weight);
             viewHolder.progressBar = (ProgressBar) view.findViewById(R.id.pb_main_download);
+            viewHolder.ivHead = (ImageView) view.findViewById(R.id.fruit_image);
             view.setTag(viewHolder);
         } else {
             view = convertView;
             // 取出缓存
             viewHolder = (ViewHolder) view.getTag();
         }
+
+        calendar = Calendar.getInstance();
+
+        setType(schedule.getType(), viewHolder.ivHead);
         viewHolder.planAim.setText(schedule.getThing());
         viewHolder.planTime.setText(schedule.getPlace());
         viewHolder.planWeight.setText("1%");
@@ -55,8 +64,43 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
         return view;
     }
 
+    private void setType(String type, ImageView ivTypr) {
+        switch (type) {
+            case "1":
+                ivTypr.setBackgroundResource(R.drawable.book);
+                break;
+            case "2":
+                ivTypr.setBackgroundResource(R.drawable.building);
+                break;
+            case "3":
+                ivTypr.setBackgroundResource(R.drawable.doctor);
+                break;
+            case "4":
+                ivTypr.setBackgroundResource(R.drawable.eg_study);
+                break;
+            case "5":
+                ivTypr.setBackgroundResource(R.drawable.painting);
+                break;
+            case "6":
+                ivTypr.setBackgroundResource(R.drawable.run);
+                break;
+            case "7":
+                ivTypr.setBackgroundResource(R.drawable.water);
+                break;
+            case "8":
+                ivTypr.setBackgroundResource(R.drawable.add_item);
+                break;
+            default:
+                break;
+
+
+        }
+
+    }
+
     // 内部类
     class ViewHolder {
+        ImageView ivHead;
         TextView planAim;
         TextView planTime;
         TextView planWeight;

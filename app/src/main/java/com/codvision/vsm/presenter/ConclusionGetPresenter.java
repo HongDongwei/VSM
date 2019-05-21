@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  * todo
  */
 public class ConclusionGetPresenter implements ConclusionGetContract.Presenter {
-    public static final String TAG = "UserSubmitPresenter";
+    public static final String TAG = "ConclusionGetPresenter";
     private ConclusionGetContract.View view;
     private Context context;
 
@@ -43,6 +43,7 @@ public class ConclusionGetPresenter implements ConclusionGetContract.Presenter {
                     @Override
                     protected void onSuccees(WrapperEntity<ArrayList<Conclusion>> wrapperEntity) throws Exception {
                         if (wrapperEntity.getStatus()) {
+                            Log.i(TAG, "onSuccees: ArrayList"+wrapperEntity.getData().size());
                             view.getConclusionSuccess(wrapperEntity.getData());
                         } else {
                             view.getConclusionFail(wrapperEntity.getCode(), wrapperEntity.getCode() + ": " + wrapperEntity.getMessage());

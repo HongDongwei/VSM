@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by sxy on 2019/5/19 2:08
  * todo
  */
-public class ConclusionGetContract {
+public interface ConclusionGetContract {
     public interface Presenter {
         //提交
         void getConclusion(ConclusionGet conclusionGet);

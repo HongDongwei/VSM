@@ -210,11 +210,11 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Sch
                 Intent intent = new Intent(getActivity(), CalendarActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.ib_add: //语音识别（把声音转文字）
+            case R.id.ib_add:
                 intent = new Intent(getActivity(), AddScheduleActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.tv_back: //语音识别（把声音转文字）
+            case R.id.tv_back:
                 materialCalendarView.setSelectedDate(new Date());
                 initToady(true, CalendarDay.from(new Date()));
                 break;
@@ -404,9 +404,6 @@ public class TodayFragment extends Fragment implements View.OnClickListener, Sch
     }
 
     private void startSpeechDialog() {
-//        if (mywakeuper.isListening()) {
-//            mywakeuper.stopListening();
-//        }
         //1. 创建RecognizerDialog对象
         RecognizerDialog mDialog = new RecognizerDialog(getActivity(), new MyInitListener());
         //2. 设置accent、 language等参数

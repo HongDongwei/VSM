@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient;
  * todo
  */
 
-public class App extends Application {
+public class    App extends Application {
     public static final String TAG = "App";
     public static App app;
     public static final int TIMEOUT = 60;

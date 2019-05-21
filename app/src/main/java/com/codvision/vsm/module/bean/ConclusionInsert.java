@@ -15,6 +15,12 @@ public class ConclusionInsert implements Serializable {
 
     private String time;
 
+    public ConclusionInsert(int c_userid, String content, String time) {
+        this.c_userid = c_userid;
+        this.content = content;
+        this.time = time;
+    }
+
 
     public int getC_userid() {
         return c_userid;

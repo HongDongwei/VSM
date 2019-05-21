@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by sxy on 2019/5/19 2:08
  * todo
  */
-public class ConclusionInsertContract {
+public interface ConclusionInsertContract {
     public interface Presenter {
         //提交
         void insertConclusion(ConclusionInsert conclusionInsert);

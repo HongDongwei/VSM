@@ -11,6 +11,10 @@ public class ConclusionGet implements Serializable {
 
     private int c_userid;
 
+    public ConclusionGet(int c_userid) {
+        this.c_userid = c_userid;
+    }
+
 
     public int getC_userid() {
         return c_userid;

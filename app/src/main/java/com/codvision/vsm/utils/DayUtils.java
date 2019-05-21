@@ -116,4 +116,15 @@ public class DayUtils {
         }
         return false;
     }
+
+//        public static int dayDecline(String preTime,String nowTime){
+//            int preDay=Integer.parseInt(preTime.charAt(8) + "" + preTime.charAt(9));
+//            int nowDay=Integer.parseInt(nowTime.charAt(8) + "" + nowTime.charAt(9));
+//            int preMounth=Integer.parseInt(preTime.charAt(5) + "" + preTime.charAt(6));
+//            int nowMounth=Integer.parseInt(nowTime.charAt(5) + "" + nowTime.charAt(6));
+//            int preYear=Integer.parseInt(preTime.charAt(0) + "" + preTime.charAt(1) + preTime.charAt(2) + preTime.charAt(3));
+//            int nowYear=Integer.parseInt(nowTime.charAt(0) + "" + nowTime.charAt(1) + nowTime.charAt(2) + nowTime.charAt(3));
+//            if (nowDay<preDay)
+//            return
+//        }
 }

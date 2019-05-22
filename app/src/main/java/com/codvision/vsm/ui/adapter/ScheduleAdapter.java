@@ -44,8 +44,8 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
             viewHolder = new ViewHolder();
             viewHolder.planAim = (TextView) view.findViewById(R.id.tv_plan_aim);
             viewHolder.planTime = (TextView) view.findViewById(R.id.tv_plan_time);
-            viewHolder.planWeight = (TextView) view.findViewById(R.id.tv_plan_weight);
-            viewHolder.progressBar = (ProgressBar) view.findViewById(R.id.pb_main_download);
+            viewHolder.planStart = (TextView) view.findViewById(R.id.tv_plan_start);
+            viewHolder.planEnd = (TextView) view.findViewById(R.id.tv_plan_end);
             viewHolder.ivHead = (ImageView) view.findViewById(R.id.fruit_image);
             view.setTag(viewHolder);
         } else {
@@ -59,8 +59,8 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
         setType(schedule.getType(), viewHolder.ivHead);
         viewHolder.planAim.setText(schedule.getThing());
         viewHolder.planTime.setText(schedule.getPlace());
-        viewHolder.planWeight.setText("1%");
-        viewHolder.progressBar.setProgress(2);
+        viewHolder.planStart.setText(schedule.getStartdate() + "");
+        viewHolder.planEnd.setText(schedule.getEnddate() + "");
         return view;
     }
 
@@ -103,8 +103,8 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
         ImageView ivHead;
         TextView planAim;
         TextView planTime;
-        TextView planWeight;
-        ProgressBar progressBar;
+        TextView planStart;
+        TextView planEnd;
     }
 
 }

@@ -44,8 +44,8 @@
                 android:paddingRight="8dp"
                 android:paddingBottom="2dp"
                 android:text="每天"
-                android:textSize="10sp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="10sp" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -53,21 +53,21 @@
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/flag" />
 
-            <ProgressBar
-                android:id="@+id/pb_main_download"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="130dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:max="100" />
-
             <TextView
-                android:id="@+id/tv_plan_weight"
+                android:id="@+id/tv_plan_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="3%"
-                android:textColor="#ea9518" />
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_plan_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="3%"
+                android:textColor="@color/black"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

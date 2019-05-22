@@ -83,6 +83,14 @@ public class DayUtils {
         return false;
     }
 
+    public static boolean isDay(String fristDate, String endData, String checkDate) {
+        Log.i(TAG, "isDay: fristDate=" + fristDate + " endData=" + endData + "checkDate=" + checkDate);
+        if (getD(endData) < getD(checkDate)) {
+            return true;
+        }
+        return false;
+    }
+
     public static int getYear(String time) {
         String year = time.charAt(0) + "" + time.charAt(1) + time.charAt(2) + time.charAt(3);
         return Integer.parseInt(year);
@@ -90,6 +98,11 @@ public class DayUtils {
 
     public static int getMounth(String time) {
         String moubth = time.charAt(5) + "" + time.charAt(6);
+        return Integer.parseInt(moubth);
+    }
+
+    public static int getD(String time) {
+        String moubth = time.charAt(8) + "" + time.charAt(9);
         return Integer.parseInt(moubth);
     }
 

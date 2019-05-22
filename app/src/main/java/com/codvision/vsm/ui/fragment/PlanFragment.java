@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.codvision.vsm.utils.DayUtils.isDay;
 import static com.codvision.vsm.utils.DayUtils.isMounth;
 
 public class PlanFragment extends Fragment implements View.OnClickListener, ScheduleGetContract.View, ScheduleDeleteContract.View {
@@ -50,6 +51,7 @@ public class PlanFragment extends Fragment implements View.OnClickListener, Sche
     private ScheduleGetPresenter scheduleGetPresenter;
     private ScheduleDeletePresenter scheduleDeletePresenter;
     private ScheduleGet scheduleGet;
+    private TextView tvNum;
     private TextView tvComplete;
     private TextView tvUnComplete;
     private ImageView ivAdd;
@@ -74,9 +76,10 @@ public class PlanFragment extends Fragment implements View.OnClickListener, Sche
         scheduleAdapter = new ScheduleAdapter(getActivity(), R.layout.plan_item, scheduleArrayList);
         lvPlan = view.findViewById(R.id.lv_plan);
         ivTitleArrow = view.findViewById(R.id.iv_title_arrow);
+        tvComplete = view.findViewById(R.id.tv_plan_complete);
         scheduleGetPresenter = new ScheduleGetPresenter(this, getActivity());
         scheduleDeletePresenter = new ScheduleDeletePresenter(this, getActivity());
-        tvComplete = view.findViewById(R.id.tv_plan_complete);
+        tvNum = view.findViewById(R.id.tv_plan_num);
         tvUnComplete = view.findViewById(R.id.tv_plan_uncomplete);
         ivAdd = view.findViewById(R.id.iv_plan_add);
     }
@@ -186,6 +189,8 @@ public class PlanFragment extends Fragment implements View.OnClickListener, Sche
     public void getScheduleSuccess(ArrayList<Schedule> arrayList) {
         scheduleArrayList.clear();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        int complete = 0;
+        int unComplete = 0;
         if (arrayList.size() > 0) {
             Log.i(TAG, "getScheduleSuccess: 成功了,arrayList.size():" + arrayList.size() + " day:" + df.format(arrayList.get(0).getStartdate()) + " time:" + time);
             for (int i = 0; i < arrayList.size(); i++) {
@@ -195,10 +200,19 @@ public class PlanFragment extends Fragment implements View.OnClickListener, Sche
                     scheduleArrayList.add(schedule);
                 }
             }
-            tvComplete.setText(scheduleArrayList.size() + "");
-            tvUnComplete.setText(scheduleArrayList.size() + "");
+            for (int i = 0; i < scheduleArrayList.size(); i++) {
+                Schedule schedule = arrayList.get(i);
+                if (isDay(df.format(schedule.getStartdate()) + "", df.format(schedule.getEnddate()) + "", time)) {
+                    complete += 1;
+                } else {
+                    unComplete += 1;
+                }
+            }
+            tvNum.setText(scheduleArrayList.size() + "");
+            tvUnComplete.setText(unComplete + "");
+            tvComplete.setText(complete + "");
         } else {
-            tvComplete.setText("0");
+            tvNum.setText("0");
             tvUnComplete.setText("0");
         }
         scheduleAdapter.notifyDataSetChanged();

@@ -59,8 +59,8 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule> {
         setType(schedule.getType(), viewHolder.ivHead);
         viewHolder.planAim.setText(schedule.getThing());
         viewHolder.planTime.setText(schedule.getPlace());
-        viewHolder.planStart.setText(schedule.getStartdate() + "");
-        viewHolder.planEnd.setText(schedule.getEnddate() + "");
+        viewHolder.planStart.setText(schedule.getStartdate().getYear() + ""+schedule.getStartdate().getMonth()+schedule.getStartdate().getDay());
+        viewHolder.planEnd.setText(schedule.getEnddate().getYear() + ""+schedule.getEnddate().getMonth()+schedule.getEnddate().getDay());
         return view;
     }
 

@@ -2,6 +2,8 @@ package com.codvision.vsm.utils;
 
 import android.util.Log;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -84,8 +86,9 @@ public class DayUtils {
     }
 
     public static boolean isDay(String fristDate, String endData, String checkDate) {
+        Calendar calendar = Calendar.getInstance();
         Log.i(TAG, "isDay: fristDate=" + fristDate + " endData=" + endData + "checkDate=" + checkDate);
-        if (getD(endData) < getD(checkDate)) {
+        if (getD(endData) < calendar.get(Calendar.DAY_OF_MONTH)) {
             return true;
         }
         return false;

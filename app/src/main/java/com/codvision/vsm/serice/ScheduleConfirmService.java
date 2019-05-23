@@ -23,7 +23,8 @@ public class ScheduleConfirmService extends Service {
 
     private Timer timer = new Timer();
     private TimerTask task;
-    private Calendar calendar;
+    private Calendar calendar1;
+    private Calendar calendar2;
     private SocketBinder sockerBinder = new SocketBinder();
     private Callback callback;
 
@@ -46,7 +47,7 @@ public class ScheduleConfirmService extends Service {
     }
 
     public static interface Callback {
-        void onDataChange(String data, int id);
+        void onDataChange(String data, int id, int type);
     }
 
     //定时发送数据
@@ -63,11 +64,23 @@ public class ScheduleConfirmService extends Service {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                calendar = Calendar.getInstance();
+                                calendar1 = Calendar.getInstance();
+                                calendar2 = Calendar.getInstance();
+                                Log.i(TAG, "run: " + calendar1.get(Calendar.MINUTE));
+                                calendar2.add(Calendar.MINUTE, +15);
+                                Log.i(TAG, "run: " + calendar2.get(Calendar.MINUTE));
                                 for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
-                                    if (DayUtils.compareTime(calendar, Constant.scheduleArrayList.get(i).getPlace()) && (Constant.scheduleArrayList.get(i).getState() == 0)) {
+                                    if (DayUtils.compareTime(calendar2, Constant.scheduleArrayList.get(i).getPlace()) && (Constant.scheduleArrayList.get(i).getState() == 0)) {
                                         if (callback != null) {
-                                            callback.onDataChange(Constant.scheduleArrayList.get(i).getThing(), Constant.scheduleArrayList.get(i).getId());
+                                            callback.onDataChange(Constant.scheduleArrayList.get(i).getThing(), Constant.scheduleArrayList.get(i).getId(), 1);
+                                        }
+                                        break;
+                                    }
+                                }
+                                for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
+                                    if (DayUtils.compareTime(calendar1, Constant.scheduleArrayList.get(i).getPlace()) && (Constant.scheduleArrayList.get(i).getState() == 1)) {
+                                        if (callback != null) {
+                                            callback.onDataChange(Constant.scheduleArrayList.get(i).getThing(), Constant.scheduleArrayList.get(i).getId(), 2);
                                         }
                                         break;
                                     }

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FragmentManager fragmentManager;
     private boolean mIsBound;
+    private int type1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,12 +230,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             scheduleConfirmService.setCallback(new ScheduleConfirmService.Callback() {
 
                 @Override
-                public void onDataChange(String data, int id) {
-                    for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
-                        if (Constant.scheduleArrayList.get(i).getId() == id) {
-                            Constant.scheduleArrayList.get(i).setState(1);
+                public void onDataChange(String data, int id, int type) {
+                    if (type == 1) {
+                        for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
+                            if (Constant.scheduleArrayList.get(i).getId() == id) {
+                                Constant.scheduleArrayList.get(i).setState(1);
+                            }
+                        }
+                    } else if (type == 2) {
+                        for (int i = 0; i < Constant.scheduleArrayList.size(); i++) {
+                            if (Constant.scheduleArrayList.get(i).getId() == id) {
+                                Constant.scheduleArrayList.get(i).setState(2);
+                            }
                         }
                     }
+                    type1 = type;
                     Message msg = new Message();
                     msg.obj = data;
                     msg.what = id;
@@ -275,7 +285,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     presenter.submitSchedule(new ScheduleSubmit(Constant.scheduleArrayList.get(i).getId(), 1));
                 }
             }
-            speekText("您有一个" + msg.obj.toString() + "的任务还没完成，请尽快完成");
+            if (type1==1){
+                speekText("您有一个" + msg.obj.toString() + "的任务，提前十五分钟提醒你");
+            }else if(type1==2){
+                speekText("您有一个" + msg.obj.toString() + "的任务还没完成，请尽快完成");
+            }
+
             Log.i(TAG, "handleMessage: " + msg.obj.toString());
         }
     };
